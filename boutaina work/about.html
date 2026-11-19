@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>من نحن | Mastenglish</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        header {
+            background-color: #1e3c72;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-size: 16px;
+        }
+        nav a:hover {
+            color: #ff6584;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        .about-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .about-title h1 {
+            color: #1e3c72;
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        .about-title p {
+            color: #555;
+            font-size: 18px;
+        }
+        
+        /* قسم القصة والصورة */
+        .story-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            background: linear-gradient(135deg, #ffffff 0%, #fdf2f4 100%);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(30, 60, 114, 0.08);
+            border: 1px solid #fae1e6;
+            margin-bottom: 40px;
+        }
+        .story-image img {
+            width: 300px;
+            height: 360px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            border: 3px solid #ff6584;
+        }
+        .story-text {
+            flex: 1;
+        }
+        .story-text h2 {
+            color: #1e3c72;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        .founder-title {
+            color: #ff6584;
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+        .story-text p {
+            color: #445;
+            font-size: 16px;
+            line-height: 1.9;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        /* قسم المبادئ (ستايل Preply المربعات) */
+        .principles-title {
+            text-align: center;
+            margin: 60px 0 30px 0;
+            color: #1e3c72;
+            font-size: 32px;
+        }
+        .principles-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .principle-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border-top: 5px solid #1e3c72;
+        }
+        .principle-card.pink-border {
+            border-top-color: #ff6584;
+        }
+        .principle-card h3 {
+            color: #1e3c72;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        .principle-card p {
+            color: #555;
+            font-size: 15px;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        footer {
+            background-color: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            font-size: 14px;
+        }
+
+        /* تجاوب مع الهاتف */
+        @media (max-width: 768px) {
+            .story-section {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+            .story-image img {
+                width: 100%;
+                height: 300px;
+            }
+            .principles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- القائمة العلوية -->
+    <header>
+        <div class="logo">Mastenglish<span style="color: #ff6584;">.ma</span></div>
+        <nav>
+            <a href="index.html">الرئيسية</a>
+            <a href="about.html" style="color: #ff6584; font-weight: bold;">من نحن</a>
+            <a href="index.html#pricing">الأثمنة</a>
+            <a href="index.html#contact">تواصل معنا</a>
+        </nav>
+    </header>
+
+    <!-- محتوى صفحة من نحن -->
+    <div class="container">
+        
+        <div class="about-title">
+            <h1>القصة خلف Mastenglish</h1>
+            <p>نؤمن بأن تعلم الإنجليزية يجب أن يكون ممتعاً، فعالاً، وقريباً من واقعك.</p>
+        </div>
+
+        <!-- قسم الصورة والقصة -->
+        <div class="story-section">
+            <div class="story-image">
+                <img src="boutaina.jpeg" alt="بثينة مزيلي - مؤسسة أكاديمية Mastenglish">
+            </div>
+            <div class="story-text">
+                <h2>بثينة مزيلي</h2>
+                <div class="founder-title">مؤسسة الأكاديمية & أستاذة اللغة الإنجليزية</div>
+                
+                <p>
+                    مرحباً! أنا بثينة، سأكون مرافقتكم في هذه الرحلة التعليمية. تأسست <strong>Mastenglish</strong> نتيجة قناعة راسخة بأن اللغات لا تُكتسب بالتلقين المعقد، بل بالتجربة والتفاعل الحي. لاحظت مدى معاناة الكثير من المتعلمين مع الطرق التقليدية التي تخلق حاجزاً نفسياً أمام التحدث، فقررت تقديم منهجية مختلفة كلياً.
+                </p>
+                <p>
+                    نعتمد في أكاديميتنا على خلق جو مريح يكسر الخوف والحشمة، ويشجع الصغار والكبار على التعبير بطلاقة منذ الحصص الأولى. تركيزنا الأساسي ليس على الحفظ الجاف، بل على بناء الثقة بالنفس وتمكين الطالب من استخدام اللغة الإنجليزية بثبات في حياته اليومية أو الدراسية.
+                </p>
+            </div>
+        </div>
+
+        <!-- قسم المبادئ (ستايل Preply المربعات) -->
+        <h2 class="principles-title">مبادئنا وقيمنا</h2>
+        
+        <div class="principles-grid">
+            <div class="principle-card">
+                <h3>الطموح والشغف</h3>
+                <p>ندفع طلابنا لتجاوز حدودهم وتحقيق نقلة حقيقية في مستواهم، لنبقى بصمة إيجابية ودائمة في مسارهم التعليمي.</p>
+            </div>
+            
+            <div class="principle-card pink-border">
+                <h3>التركيز على المتعلم</h3>
+                <p>كل حصة مصممة خصيصاً لتمنح كل تلميذ الوقت الكافي للمشاركة، التفاعل، وبناء الثقة بالنفس دون أي خجل.</p>
+            </div>
+
+            <div class="principle-card pink-border">
+                <h3>التطوير المستمر</h3>
+                <p>نحرص على تجديد أساليبنا وطرق تدريسنا باستمرار لنواكب أحدث الطرق الممتعة والفعالة في اكتساب اللغات.</p>
+            </div>
+
+            <div class="principle-card">
+                <h3>التفاعل الحي والسرعة</h3>
+                <p>في عالم يتطور بسرعة، نؤمن بأن التدريس المباشر والتفاعل الفوري هما أقصر طريق لتحقيق نتائج مبهرة.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © 2026 Mastenglish.ma</p>
+    </footer>
+
+</body>
+</html>

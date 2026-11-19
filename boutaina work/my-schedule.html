@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>جدول حصصي - Mastenglish.ma</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px 16px;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      color: #24324a;
+    }
+
+    main {
+      max-width: 800px;
+      margin: auto;
+      padding: 28px;
+      background: white;
+      border-radius: 16px;
+    }
+
+    h1, h2 { color: #1e3a8a; }
+    h2 { font-size: 20px; }
+    p { line-height: 1.8; }
+    a { color: #1e3a8a; }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    button {
+      padding: 11px 18px;
+      border: 0;
+      border-radius: 8px;
+      background: #1e3a8a;
+      color: white;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:disabled { opacity: .6; cursor: wait; }
+
+    .session {
+      margin-top: 18px;
+      padding: 22px;
+      background: #e9f4ee;
+      border: 1px solid #c6dfd1;
+      border-radius: 18px 5px 18px 18px;
+      overflow-wrap: anywhere;
+    }
+
+    #message { min-height: 28px; }
+  </style>
+</head>
+
+<body>
+  <main>
+    <nav aria-label="روابط الحساب">
+      <a href="index.html">الرئيسية</a>
+      <a href="my-bookings.html">حجوزاتي التجريبية</a>
+      <a href="my-payment.html">أداء الاشتراك</a>
+    </nav>
+
+    <h1>جدول حصصي</h1>
+    <p>الحصص المنتظمة ديال مجموعتك. جميع الأوقات بتوقيت المغرب.</p>
+
+    <button id="refreshButton" type="button">تحديث الجدول</button>
+    <p id="message" role="status" aria-live="polite"></p>
+    <div id="sessionsList"></div>
+  </main>
+
+  <script>
+    const list = document.getElementById('sessionsList');
+    const message = document.getElementById('message');
+    const refresh = document.getElementById('refreshButton');
+
+    const formatter = new Intl.DateTimeFormat('ar-MA', {
+      timeZone: 'Africa/Casablanca',
+      dateStyle: 'full',
+      timeStyle: 'short'
+    });
+
+    async function loadSchedule() {
+      refresh.disabled = true;
+      message.textContent = 'جاري تحميل جدول الحصص...';
+
+      try {
+        const response = await fetch('/my-class-sessions', {
+          cache: 'no-store'
+        });
+
+        if (response.status === 401) {
+          window.location.href = '/login.html';
+          return;
+        }
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          throw new Error(data.error || 'تعذر تحميل الجدول.');
+        }
+
+        if (!Array.isArray(data.sessions)) {
+          throw new Error('تعذر قراءة الجدول. حدّث الصفحة.');
+        }
+
+        list.replaceChildren();
+
+        for (const session of data.sessions) {
+          const start = new Date(session.starts_at);
+          const end = new Date(start.getTime() + 40 * 60 * 1000);
+
+          const card = document.createElement('section');
+          card.className = 'session';
+
+          const title = document.createElement('h2');
+          title.textContent = session.group_name;
+          card.appendChild(title);
+
+          for (const text of [
+            `البداية: ${formatter.format(start)}`,
+            `النهاية: ${formatter.format(end)}`,
+            'مدة الحصة: 40 دقيقة'
+          ]) {
+            const line = document.createElement('p');
+            line.textContent = text;
+            card.appendChild(line);
+          }
+const lessonStatus = document.createElement('p');
+
+const joinLink = document.createElement('a');
+joinLink.href = 'room.html';
+joinLink.textContent = 'الدخول للحصة';
+joinLink.style.cssText =
+    'display:none;margin-top:12px;padding:12px 20px;' +
+    'background:#15803d;color:white;border-radius:8px;' +
+    'text-decoration:none;font-weight:bold;';
+
+card.append(lessonStatus, joinLink);
+
+function updateClassEntry() {
+    const now = Date.now();
+    const started = now >= start.getTime();
+    const ended = now >= end.getTime();
+
+    joinLink.style.display =
+        started && !ended ? 'inline-block' : 'none';
+
+    if (ended) {
+        lessonStatus.textContent = 'انتهى موعد الحصة.';
+    } else if (started) {
+        lessonStatus.textContent =
+            'وصل وقت الحصة. الدخول كيتطلب اشتراكاً شهرياً مفعّلاً.';
+    } else {
+        lessonStatus.textContent =
+            'زر الدخول غادي يبان هنا ملي يوصل وقت الحصة.';
+    }
+}
+
+updateClassEntry();
+
+const classTimer = setInterval(() => {
+    if (!card.isConnected) {
+        clearInterval(classTimer);
+        return;
+    }
+
+    updateClassEntry();
+}, 1000);
+          list.appendChild(card);
+        }
+
+        message.textContent = data.sessions.length
+          ? 'ها الحصص الجارية أو المقبلة المبرمجة ليك.'
+          : 'ما عندك حتى حصة منتظمة جارية أو مقبلة مبرمجة حالياً.';
+      } catch (error) {
+        message.textContent =
+          error.message || 'تعذر الاتصال بالسيرفر.';
+      } finally {
+        refresh.disabled = false;
+      }
+    }
+
+    refresh.addEventListener('click', loadSchedule);
+    loadSchedule();
+  </script>
+</body>
+</html>

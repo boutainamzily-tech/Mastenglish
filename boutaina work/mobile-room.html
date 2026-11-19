@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>قاعة الدرس - Mastenglish.ma</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      text-align: center;
+    }
+    main {
+      padding: 32px 20px;
+    }
+    h1 { color: #1e3a8a; }
+    button {
+      background: #10b981;
+      color: white;
+      border: 0;
+      border-radius: 8px;
+      padding: 14px 22px;
+      font-size: 17px;
+      font-weight: bold;
+    }
+    #status { color: #555; }
+    #zmmtg-root { display: none; }
+  </style>
+</head>
+<body>
+  <div id="zmmtg-root"></div>
+  <div id="aria-notify-area"></div>
+
+  <main>
+    <h1>قاعة الدرس المباشر</h1>
+    <p>اضغط على الزر للدخول إلى الحصة داخل الموقع.</p>
+    <button id="joinButton" type="button">دخول إلى الحصة</button>
+    <p id="status"></p>
+  </main>
+
+  <script src="https://source.zoom.us/6.5.0/lib/vendor/react.min.js"></script>
+<script src="https://source.zoom.us/6.5.0/lib/vendor/react-dom.min.js"></script>
+<script src="https://source.zoom.us/6.5.0/lib/vendor/react-redux.min.js"></script>
+<script src="https://source.zoom.us/6.5.0/lib/vendor/redux.min.js"></script>
+<script src="https://source.zoom.us/6.5.0/lib/vendor/redux-thunk.min.js"></script>
+<script src="https://source.zoom.us/6.5.0/lib/vendor/lodash.min.js"></script>
+<script src="https://source.zoom.us/zoom-meeting-6.5.0.min.js"></script>
+
+  <style>
+  body > main {
+    display: block !important;
+    position: relative !important;
+    text-align: center !important;
+    padding: 32px 20px !important;
+  }
+  body > main > h1 {
+    color: #1e3a8a !important;
+  }
+  body > main > button#joinButton {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: #10b981 !important;
+    color: white !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    padding: 14px 22px !important;
+    font-size: 17px !important;
+    cursor: pointer !important;
+  }
+</style>
+<script>
+    
+    const statusElement = document.getElementById('status');
+    const joinButton = document.getElementById('joinButton');
+
+    ZoomMtg.setZoomJSLib('https://source.zoom.us/6.5.0/lib', '/av');
+    ZoomMtg.preLoadWasm();
+    ZoomMtg.prepareWebSDK();
+
+    joinButton.addEventListener('click', async () => {
+      const studentName = prompt('كتب سميتك باش تدخل للحصة:')?.trim();
+      if (!studentName) return;
+
+      joinButton.disabled = true;
+      statusElement.textContent = 'جاري الدخول إلى الحصة...';
+
+      try {
+        const response = await fetch('/zoom-signature', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({})
+        });
+
+        const data = await response.json();
+
+if (!response.ok) {
+    throw new Error(data.error || 'تعذر الدخول للحصة');
+
+
+
+}
+        document.getElementById('zmmtg-root').style.display = 'block';
+
+        ZoomMtg.init({
+          leaveUrl: window.location.href,
+          success: () => {
+            ZoomMtg.join({
+              signature: data.signature,
+             meetingNumber: data.meetingNumber,
+passWord: data.password,
+              userName: studentName,
+              success: () => {
+                statusElement.textContent = '';
+              },
+              error: (error) => {
+                console.error('Zoom join error:', error);
+                statusElement.textContent = 'وقع مشكل أثناء الدخول للحصة.';
+                joinButton.disabled = false;
+              }
+            });
+          },
+          error: (error) => {
+            console.error('Zoom init error:', error);
+            statusElement.textContent = 'تعذر فتح قاعة Zoom.';
+            joinButton.disabled = false;
+          }
+        });
+      } catch (error) {
+        console.error('Meeting error:', error);
+        statusElement.textContent = error.message || 'تعذر الدخول للحصة.';
+        joinButton.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

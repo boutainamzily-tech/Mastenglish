@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>حجز حصة تجريبية - Mastenglish.ma</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px 16px;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      color: #222;
+    }
+    main {
+      max-width: 600px;
+      margin: auto;
+      padding: 24px;
+      background: white;
+      border-radius: 12px;
+    }
+    h1 { color: #1e3a8a; font-size: 26px; }
+    label { display: block; margin: 20px 0 8px; }
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      font: inherit;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      margin-top: 24px;
+      background: #1e3a8a;
+      color: white;
+    }
+    button:disabled { opacity: .5; }
+    #bookingMessage { line-height: 1.8; }
+  </style>
+</head>
+<body>
+  <main>
+    <a href="index.html">العودة للرئيسية</a>
+    <h1>حجز حصة تجريبية مجانية</h1>
+    <p>اختاري البرنامج والموعد المناسب. الأوقات بتوقيت المغرب.</p>
+
+    <form id="bookingForm">
+      <label for="program">البرنامج</label>
+      <select id="program" required>
+        <option value="">اختاري البرنامج</option>
+        <option value="kids">الصغار والمراهقون</option>
+        <option value="adults">الكبار</option>
+        <option value="one-on-one">حصص فردية خاصة</option>
+      </select>
+
+      <label for="learnerName">اسم المستفيد من الحصة</label>
+      <input id="learnerName" required minlength="2" maxlength="80"
+             autocomplete="name">
+
+      <label for="learnerAge">عمر المستفيد</label>
+      <input id="learnerAge" type="number" min="4" max="120" required>
+
+      <label for="bookingSlot">الموعد المتاح</label>
+      <select id="bookingSlot" required disabled>
+        <option value="">جاري تحميل المواعيد...</option>
+      </select>
+
+      <button id="bookButton" type="submit" disabled>
+        طلب حجز الحصة
+      </button>
+    </form>
+
+    <p id="bookingMessage" role="status"></p>
+  </main>
+
+  <script>
+    const bookingSlot = document.getElementById('bookingSlot');
+    const bookingMessage = document.getElementById('bookingMessage');
+    const selectedProgram = new URLSearchParams(
+    window.location.search
+).get('program');
+
+if (['kids', 'adults', 'one-on-one'].includes(selectedProgram)) {
+    document.getElementById('program').value = selectedProgram;
+}
+
+    const dateFormatter = new Intl.DateTimeFormat('ar-MA', {
+      timeZone: 'Africa/Casablanca',
+      dateStyle: 'full',
+      timeStyle: 'short'
+    });
+
+    const timeFormatter = new Intl.DateTimeFormat('ar-MA', {
+      timeZone: 'Africa/Casablanca',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+
+    async function loadAvailableSlots() {
+      const response = await fetch('/booking-slots', {
+        cache: 'no-store'
+      });
+
+      if (response.status === 401) {
+        bookingSlot.replaceChildren(new Option('خاصك تسجلي الدخول', ''));
+        const link = document.createElement('a');
+        link.href = '/login.html';
+        link.textContent = 'تسجيل الدخول أو إنشاء حساب';
+        bookingMessage.replaceChildren(link);
+        return;
+      }
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'تعذر تحميل المواعيد');
+      }
+
+      bookingSlot.replaceChildren(
+        new Option(
+          data.slots.length
+            ? 'اختاري الموعد'
+            : 'لا توجد مواعيد متاحة حالياً',
+          ''
+        )
+      );
+
+      for (const slot of data.slots) {
+        const start = dateFormatter.format(new Date(slot.starts_at));
+        const end = timeFormatter.format(new Date(slot.ends_at));
+        bookingSlot.add(new Option(`${start} حتى ${end}`, slot.id));
+      }
+
+      bookingSlot.disabled = !data.slots.length;
+      document.getElementById('bookButton').disabled = !data.slots.length;
+    }
+
+    const bookingForm = document.getElementById('bookingForm');
+const bookButton = document.getElementById('bookButton');
+
+bookingForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    bookButton.disabled = true;
+    bookingMessage.textContent = 'جاري إرسال طلب الحجز...';
+
+    try {
+        const response = await fetch('/bookings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                slot_id: Number(bookingSlot.value),
+                program: document.getElementById('program').value,
+                learner_name: document.getElementById('learnerName').value,
+                learner_age: Number(
+                    document.getElementById('learnerAge').value
+                )
+            })
+        });
+
+        if (response.status === 401) {
+            bookingMessage.textContent =
+                'الجلسة سالات. سجّلي الدخول من جديد قبل الحجز.';
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'تعذر إرسال الطلب');
+        }
+
+        bookingForm.hidden = true;
+        bookingMessage.textContent =
+            `تحفظ طلب الحجز رقم ${data.booking.id}. ` +
+            'الطلب في انتظار تأكيد الأستاذة؛ الموعد مازال ما تأكدش.';
+    } catch (error) {
+        bookingMessage.textContent =
+            error.message || 'تعذر الاتصال بالسيرفر';
+        bookButton.disabled = false;
+    }
+});
+
+    loadAvailableSlots().catch(error => {
+      bookingSlot.replaceChildren(new Option('تعذر تحميل المواعيد', ''));
+      bookingMessage.textContent = error.message;
+    });
+  </script>
+</body>
+</html>

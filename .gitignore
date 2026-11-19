@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Databases and their temporary files
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+
+# Logs
+*.log
+
+# Local test scripts
+create-reset-test.js
+
+# macOS files
+.DS_Store
+/teaching-materials/

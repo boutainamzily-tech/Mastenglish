@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">دروس القواعد - Mastenglish.ma</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            text-align: right;
+        }
+        header {
+            background-color: #1e3c72;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+        }
+        nav a:hover {
+            color: #ffcc00;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        h1 {
+            color: #1e3c72;
+            margin-top: 0;
+            font-size: 26px;
+            border-bottom: 3px solid #ffcc00;
+            padding-bottom: 10px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #1e3c72;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .back-link:hover {
+            color: #ffcc00;
+        }
+        .video-box {
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 30px 0;
+            text-align: center;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        .section-title {
+            color: #1e3c72;
+            font-size: 20px;
+            margin-top: 30px;
+            border-right: 4px solid #ffcc00;
+            padding-right: 10px;
+        }
+        p, li {
+            color: #444;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        ul {
+            padding-right: 20px;
+        }
+        .example-box {
+            background: #f0f4f8;
+            border-right: 4px solid #1e3c72;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .example-box p {
+            margin: 5px 0;
+        }
+        .quiz-box {
+            background: #fffbe6;
+            border: 2px dashed #ffcc00;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+        .quiz-box h3 {
+            color: #1e3c72;
+            margin-top: 0;
+        }
+        .question-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+        }
+        .question-card p {
+            font-weight: bold;
+            color: #1e3c72;
+            margin-top: 0;
+        }
+        .quiz-options label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background: #fafafa;
+        }
+        .quiz-options label:hover {
+            background: #f1f1f1;
+        }
+        .explanation {
+            font-size: 14px;
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct-exp {
+            background: #e2f0d9;
+            color: #385723;
+        }
+        .wrong-exp {
+            background: #fce4d6;
+            color: #c65911;
+        }
+        .submit-btn {
+            background-color: #1e3c72;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .submit-btn:hover {
+            background-color: #ffcc00;
+            color: #1e3c72;
+        }
+        #result-box {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Mastenglish<span style="color: #ffcc00;">.ma</span></div>
+        <nav>
+            <a href="index.html">الرئيسية</a>
+            <a href="grammar.html">قواعد الإنجليزية</a>
+            <a href="verbs-category.html">الأفعال والأزمنة</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="verbs-category.html" class="back-link">← الرجوع إلى قائمة الأفعال</a>
+        
+        <h1 id="lessonTitle">جاري تحميل الدرس...</h1>
+        <div id="lessonContent"></div>
+
+        <!-- الكويز -->
+        <div class="quiz-box">
+            <h3>🧠 اختبار شامل للدرس (10 أسئلة)</h3>
+            <form id="quizForm">
+                <div id="questionsContainer"></div>
+                <button type="button" class="submit-btn" onclick="checkQuiz()">تصحيح الإجابات ورؤية النتيجة</button>
+            </form>
+            <div id="result-box"></div>
+        </div>
+    </div>
+
+    <script>
+        const lessonsData = {
+            "verb-to-be": {
+                title: "الدرس 1: فعل الكون (Verb to Be)",
+                intro: "مرحباً بك في أول درس أساسي! اليوم غادي نتعرفو على أهم فعل في اللغة الإنجليزية اللي هو <strong>Verb to Be</strong> (فعل الكون)، وكيفاش كنستعملوه بالدارجة المبسطة.",
+                videoText: "🎥 [فيديو شروحات Verb to Be بالصوت والصورة]",
+                bodyHtml: `
+                    <h2 class="section-title">شنو هو Verb to Be؟</h2>
+                    <p>بالدارجة، هو بحال "أنا هو"، "هو كاين"، "نحن نتواجد"... في الإنجليزية كنستعملوه بزاف فاش نبغيو نعرفوا برأسنا، نعطيو العمر، الحالة، أو المكان.</p>
+                    <p>في الحاضر (Present)، كينقسم لثلاثة ديال الأشكال حسب الضمير:</p>
+                    <ul>
+                        <li><strong>Am:</strong> كتصاحب غير الضمير <strong>I</strong> (أنا) ➔ <em>I am</em></li>
+                        <li><strong>Is:</strong> كتصاحب الضمير المفرد الغائب <strong>He, She, It</strong> ➔ <em>He is, She is</em></li>
+                        <li><strong>Are:</strong> كتصاحب الجمع والضمائر <strong>We, You, They</strong> ➔ <em>We are, They are</em></li>
+                    </ul>
+                    <h2 class="section-title">أمثلة تطبيقية من الحياة اليومية</h2>
+                    <div class="example-box"><p><strong>I am a teacher.</strong></p><p><em>بالدارجة:</em> أنا أستاذة / معلمة.</p></div>
+                    <div class="example-box"><p><strong>She is happy today.</strong></p><p><em>بالدارجة:</em> هي فرحانة اليوم.</p></div>
+                    <div class="example-box"><p><strong>They are in Tiznit.</strong></p><p><em>بالدارجة:</em> هما كاينين في تزنيت.</p></div>
+                `,
+                quiz: [
+                    { q: "1. I ......... a student.", options: ["am", "is", "are"], correct: "am", exp: "الجواب الصحيح هو 'am' حيت الضمير هو I (أنا)." },
+                    { q: "2. She ......... my best friend.", options: ["am", "is", "are"], correct: "is", exp: "الجواب الصحيح هو 'is' حيت She (هي) مفرد غائب." },
+                    { q: "3. We ......... happy to learn English.", options: ["am", "is", "are"], correct: "are", exp: "الجواب الصحيح هو 'are' حيت We (نحن) ضمير جمع." },
+                    { q: "4. They ......... in the classroom.", options: ["am", "is", "are"], correct: "are", exp: "الجواب الصحيح هو 'are' حيت They (هم) ضمير جمع." },
+                    { q: "5. He ......... a software developer.", options: ["am", "is", "are"], correct: "is", exp: "الجواب الصحيح هو 'is' حيت He (هو) مفرد غائب." },
+                    { q: "6. You ......... very kind.", options: ["am", "is", "are"], correct: "are", exp: "الجواب الصحيح هو 'are' حيت You كتستعمل للجمع وللمفرد وكتدي دائماً are." },
+                    { q: "7. The cat ......... sleeping on the chair.", options: ["am", "is", "are"], correct: "is", exp: "الجواب الصحيح هو 'is' حيت The cat قطة واحدة (مفرد غير عاقل)." },
+                    { q: "8. My brother and I ......... from Morocco.", options: ["am", "is", "are"], correct: "are", exp: "الجواب الصحيح هو 'are' حيت My brother and I أصبحوا جمع (نحن)." },
+                    { q: "9. The weather ......... nice today.", options: ["am", "is", "are"], correct: "is", exp: "الجواب الصحيح هو 'is' حيت The weather الطقس مفرد غير عاقل." },
+                    { q: "10. Books ......... very important for learning.", options: ["am", "is", "are"], correct: "are", exp: "الجواب الصحيح هو 'are' حيت Books كتب جمع." }
+                ]
+            },
+            "verb-to-have": {
+                title: "الدرس 2: فعل التملك (Verb to Have)",
+                intro: "مرحباً بك في الدرس الثاني! اليوم غادي نتعرفو على فعل مهم بزاف اللي هو <strong>Verb to Have</strong> (فعل التملك)، وكيفاش كنستعملوه باش نعبروا على داكشي اللي عندنا بالدارجة المبسطة.",
+                videoText: "🎥 [فيديو شروحات Verb to Have بالصوت والصورة]",
+                bodyHtml: `
+                    <h2 class="section-title">شنو هو Verb to Have؟</h2>
+                    <p>بالدارجة، هو بحال "عندي"، "عندك"، "عندها"... كنستعملوه باش نعبروا على الملكية أو صفات الجسم.</p>
+                    <p>في الحاضر (Present)، كينقسم لشكلين أساسيين حسب الضمير:</p>
+                    <ul>
+                        <li><strong>Have:</strong> كتصاحب الضمائر <strong>I, You, We, They</strong></li>
+                        <li><strong>Has:</strong> كتصاحب الضمائر المفردة الغائبة <strong>He, She, It</strong></li>
+                    </ul>
+                    <h2 class="section-title">أمثلة تطبيقية من الحياة اليومية</h2>
+                    <div class="example-box"><p><strong>I have a MacBook Pro.</strong></p><p><em>بالدارجة:</em> عندي حاسوب ماك بوك برو.</p></div>
+                    <div class="example-box"><p><strong>He has a brother.</strong></p><p><em>بالدارجة:</em> عنده خو واحد.</p></div>
+                    <div class="example-box"><p><strong>We have an English lesson today.</strong></p><p><em>بالدارجة:</em> عندنا درس إنجليزية اليوم.</p></div>
+                `,
+                quiz: [
+                    { q: "1. I ......... a nice car.", options: ["have", "has", "had"], correct: "have", exp: "الجواب الصحيح هو 'have' حيت الضمير هو I." },
+                    { q: "2. She ......... a beautiful cat.", options: ["have", "has", "had"], correct: "has", exp: "الجواب الصحيح هو 'has' حيت She مفرد غائب." },
+                    { q: "3. They ......... a big house in Agadir.", options: ["have", "has", "had"], correct: "have", exp: "الجواب الصحيح هو 'have' حيت They ضمير جمع." },
+                    { q: "4. My brother ......... a new phone.", options: ["have", "has", "had"], correct: "has", exp: "الجواب الصحيح هو 'has' حيت My brother مفرد (He)." },
+                    { q: "5. We ......... a lot of work to do.", options: ["have", "has", "had"], correct: "have", exp: "الجواب الصحيح هو 'have' حيت We ضمير جمع." },
+                    { q: "6. You ......... great ideas.", options: ["have", "has", "had"], correct: "have", exp: "الجواب الصحيح هو 'have' حيت You كتاخد ديماً have." },
+                    { q: "7. The dog ......... four legs.", options: ["have", "has", "had"], correct: "has", exp: "الجواب الصحيح هو 'has' حيت The dog مفرد غير عاقل (It)." },
+                    { q: "8. Fatimzahra and Ali ......... a website.", options: ["have", "has", "had"], correct: "have", exp: "الجواب الصحيح هو 'have' حيت جوج أشخاص ولات جمع." },
+                    { q: "9. He ......... blue eyes.", options: ["have", "has", "had"], correct: "has", exp: "الجواب الصحيح هو 'has' حيت He مفرد غائب." },
+                    { q: "10. Students ......... books in their bags.", options: ["have", "has", "had"], correct: "have", exp: "الجواب الصحيح هو 'have' حيت Students طلاب جمع." }
+                ]
+            },
+            "present-simple": {
+                title: "الدرس 3: المضارع البسيط (Present Simple)",
+                intro: "مرحباً بك في الدرس الثالث! اليوم غادي نتعرفو على زمن مهم بزاف اللي هو <strong>Present Simple</strong> (المضارع البسيط)، وكيفاش كنستعملوه باش نعبروا على العادات والأحداث الروتينية بالدارجة.",
+                videoText: "🎥 [فيديو شروحات Present Simple بالصوت والصورة]",
+                bodyHtml: `
+                    <h2 class="section-title">شنو هو Present Simple؟</h2>
+                    <p>بالدارجة، كنستعملوه فاش نبغيو نهضرو على شي حاجة كنديروها بشكل متكرر، عادات يومية، أو حقائق ثابتة.</p>
+                    <p><strong>القاعدة العامة:</strong> مع كاع الضمائر (I, You, We, They) الفعل يبقى في الأصل ديالو. ولكن مع المفرد الغائب (He, She, It) ضروري نزيدو حرف <strong>s</strong> في آخر الفعل!</p>
+                    <ul>
+                        <li><strong>I play</strong> football. ➔ أنا ألعب كرة القدم.</li>
+                        <li><strong>He plays</strong> football. ➔ هو يلعب كرة القدم.</li>
+                    </ul>
+                    <h2 class="section-title">أمثلة تطبيقية من الحياة اليومية</h2>
+                    <div class="example-box"><p><strong>I teach English online.</strong></p><p><em>بالدارجة:</em> أنا كنقري الإنجليزية أونلاين.</p></div>
+                    <div class="example-box"><p><strong>She drinks coffee every morning.</strong></p><p><em>بالدارجة:</em> هي كتشرب القهوة كل صباح.</p></div>
+                    <div class="example-box"><p><strong>They live in Morocco.</strong></p><p><em>بالدارجة:</em> هما ساكنين في المغرب.</p></div>
+                `,
+                quiz: [
+                    { q: "1. I ......... English every day.", options: ["speak", "speaks", "speaking"], correct: "speak", exp: "الجواب الصحيح هو 'speak' حيت مع الضمير I الفعل يبقى في الأصل." },
+                    { q: "2. She ......... in Tiznit.", options: ["live", "lives", "living"], correct: "lives", exp: "الجواب الصحيح هو 'lives' حيت She مفرد غائب وكنزيدو s." },
+                    { q: "3. They ......... football on Sundays.", options: ["play", "plays", "playing"], correct: "play", exp: "الجواب الصحيح هو 'play' حيت They ضمير جمع." },
+                    { q: "4. My brother ......... a software developer.", options: ["work", "works", "working"], correct: "works", exp: "الجواب الصحيح هو 'works' حيت My brother مفرد (He)." },
+                    { q: "5. We ......... to learn new things.", options: ["love", "loves", "loving"], correct: "love", exp: "الجواب الصحيح هو 'love' حيت We ضمير جمع." },
+                    { q: "6. You ......... hard for your goals.", options: ["try", "tries", "trying"], correct: "try", exp: "الجواب الصحيح هو 'try' حيت You كتاخد الفعل العادي." },
+                    { q: "7. The sun ......... in the east.", options: ["rise", "rises", "rising"], correct: "rises", exp: "الجواب الصحيح هو 'rises' حيت The sun مفرد غير عاقل." },
+                    { q: "8. Cats ......... fish.", options: ["like", "likes", "liking"], correct: "like", exp: "الجواب الصحيح هو 'like' حيت Cats جمع." },
+                    { q: "9. He ......... up early in the morning.", options: ["get", "gets", "getting"], correct: "gets", exp: "الجواب الصحيح هو 'gets' حيت He مفرد غائب." },
+                    { q: "10. Students ......... books at school.", options: ["read", "reads", "reading"], correct: "read", exp: "الجواب الصحيح هو 'read' حيت Students طلاب جمع." }
+                ]
+            }
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const lessonId = urlParams.get('id') || 'verb-to-be';
+        const currentLesson = lessonsData[lessonId];
+
+        if (currentLesson) {
+            document.getElementById('pageTitle').innerText = currentLesson.title + " - Mastenglish.ma";
+            document.getElementById('lessonTitle').innerText = currentLesson.title;
+            
+            let htmlContent = `<p>${currentLesson.intro}</p>`;
+            htmlContent += `<div class="video-box"><p>${currentLesson.videoText}</p></div>`;
+            htmlContent += currentLesson.bodyHtml;
+            document.getElementById('lessonContent').innerHTML = htmlContent;
+
+            let questionsHTML = "";
+            currentLesson.quiz.forEach((item, index) => {
+                let qNum = index + 1;
+                questionsHTML += `
+                    <div class="question-card">
+                        <p>${qNum}. ${item.q}</p>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q${qNum}" value="${item.options[0]}"> ${item.options[0]}</label>
+                            <label><input type="radio" name="q${qNum}" value="${item.options[1]}"> ${item.options[1]}</label>
+                            <label><input type="radio" name="q${qNum}" value="${item.options[2]}"> ${item.options[2]}</label>
+                        </div>
+                        <div id="exp${qNum}" class="explanation"></div>
+                    </div>
+                `;
+            });
+            document.getElementById('questionsContainer').innerHTML = questionsHTML;
+        } else {
+            document.getElementById('lessonContent').innerHTML = "<p>عذراً، هذا الدرس غير متوفر حالياً.</p>";
+        }
+
+        function checkQuiz() {
+            let score = 0;
+            let quizList = currentLesson.quiz;
+
+            quizList.forEach((item, index) => {
+                let qNum = index + 1;
+                let selected = document.querySelector(`input[name="q${qNum}"]:checked`);
+                let expDiv = document.getElementById('exp' + qNum);
+                expDiv.style.display = 'block';
+
+                if (selected) {
+                    if (selected.value === item.correct) {
+                        score++;
+                        expDiv.className = 'explanation correct-exp';
+                        expDiv.innerHTML = '✅ جواب صحيح! ' + item.exp;
+                    } else {
+                        expDiv.className = 'explanation wrong-exp';
+                        expDiv.innerHTML = '❌ جواب خطأ. ' + item.exp;
+                    }
+                } else {
+                    expDiv.className = 'explanation wrong-exp';
+                    expDiv.innerHTML = '⚠️ لم تقم بالإجابة على هذا السؤال! ' + item.exp;
+                }
+            });
+
+            let resultBox = document.getElementById('result-box');
+            resultBox.style.display = 'block';
+            let percentage = (score / 10) * 100;
+            let msg = "";
+
+            if (percentage >= 80) {
+                resultBox.style.background = '#e2f0d9';
+                resultBox.style.color = '#385723';
+                msg = `🎉 تبارك الله عليك! جبتي ${score} من 10. مستوى رفيع وفهمتي الدرس مية في المية!`;
+            } else if (percentage >= 50) {
+                resultBox.style.background = '#fff2cc';
+                resultBox.style.color = '#7f6000';
+                msg = `👍 مزيان! جبتي ${score} من 10. نتيجة مقبولة ولكن عاود قرا الشرح باش تضبطها أكتر!`;
+            } else {
+                resultBox.style.background = '#fce4d6';
+                resultBox.style.color = '#c65911';
+                msg = `💪 ما تيأسش! جبتي ${score} من 10. البداية ديما كتكون هكا، عاود تشوف الفيديو والشرح وغادي تولي طوب!`;
+            }
+            resultBox.innerHTML = msg;
+        }
+    </script>
+</body>
+</html>

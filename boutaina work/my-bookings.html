@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>حجوزاتي - Mastenglish.ma</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px 16px;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      color: #222;
+    }
+    main {
+      max-width: 700px;
+      margin: auto;
+      padding: 24px;
+      background: white;
+      border-radius: 12px;
+    }
+    h1 { color: #1e3a8a; }
+    .booking {
+      border: 1px solid #ddd;
+      padding: 18px;
+      margin: 18px 0;
+      border-radius: 10px;
+      overflow-wrap: anywhere;
+    }
+    p { line-height: 1.8; }
+    .status { font-weight: bold; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <a href="index.html">العودة للرئيسية</a>
+    <h1>حجوزاتي</h1>
+    <p>جميع الأوقات بتوقيت المغرب.</p>
+    <p id="message" role="status">جاري تحميل الحجوزات...</p>
+    <div id="bookingsList"></div>
+    <a href="booking.html">حجز حصة تجريبية</a>
+  </main>
+
+  <script>
+    const message = document.getElementById('message');
+    const bookingsList = document.getElementById('bookingsList');
+
+    const programs = {
+      kids: 'الصغار والمراهقون',
+      adults: 'الكبار',
+      'one-on-one': 'حصص فردية خاصة'
+    };
+
+    const statuses = {
+      pending: 'في انتظار تأكيد الأستاذة',
+      confirmed: 'الحجز مؤكد',
+      cancelled: 'الحجز ملغى',
+      rejected: 'الطلب مرفوض',
+      completed: 'الحصة دازت',
+      no_show: 'تم تسجيل عدم الحضور'
+    };
+
+    const formatter = new Intl.DateTimeFormat('ar-MA', {
+      timeZone: 'Africa/Casablanca',
+      dateStyle: 'full',
+      timeStyle: 'short'
+    });
+
+    async function loadMyBookings() {
+      const response = await fetch('/bookings', {
+        cache: 'no-store'
+      });
+
+      if (response.status === 401) {
+        message.textContent = 'خاصك تسجلي الدخول باش تشوفي حجوزاتك.';
+
+        const link = document.createElement('a');
+        link.href = '/login.html';
+        link.textContent = 'تسجيل الدخول';
+        bookingsList.replaceChildren(link);
+        return;
+      }
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'تعذر تحميل الحجوزات');
+      }
+
+      bookingsList.replaceChildren();
+      message.textContent = data.bookings.length
+        ? ''
+        : 'ما عندك حتى حجز مسجّل حالياً.';
+
+      for (const booking of data.bookings) {
+        const card = document.createElement('section');
+        card.className = 'booking';
+
+        const title = document.createElement('h2');
+        title.textContent = `الحجز رقم ${booking.id}`;
+        card.appendChild(title);
+
+        const details = [
+          `المستفيد: ${booking.learner_name}`,
+          `البرنامج: ${programs[booking.program] || booking.program}`,
+          `البداية: ${formatter.format(new Date(booking.starts_at))}`,
+          `النهاية: ${formatter.format(new Date(booking.ends_at))}`
+        ];
+
+        for (const detail of details) {
+          const line = document.createElement('p');
+          line.textContent = detail;
+          card.appendChild(line);
+        }
+
+        const status = document.createElement('p');
+        status.className = 'status';
+        status.textContent = statuses[booking.status] || booking.status;
+        status.style.color = booking.status === 'confirmed'
+          ? '#15803d'
+          : '#555';
+        card.appendChild(status);
+        if (booking.status === 'confirmed') {
+  const lessonInfo = document.createElement('p');
+
+  const joinLink = document.createElement('a');
+  joinLink.href = 'room.html';
+  joinLink.textContent = 'الدخول للحصة';
+  joinLink.style.cssText =
+    'display:inline-block;background:#15803d;color:white;' +
+    'padding:12px 20px;border-radius:8px;text-decoration:none;';
+
+  card.appendChild(lessonInfo);
+  card.appendChild(joinLink);
+
+  function updateLessonAccess() {
+    const start = new Date(booking.starts_at).getTime();
+    const end = new Date(booking.ends_at).getTime();
+    const now = Date.now();
+
+    joinLink.hidden = true;
+
+    if (!Number.isFinite(start) ||
+        !Number.isFinite(end) || end <= start) {
+      lessonInfo.textContent = 'تعذر تحديد الموعد. حدّث الصفحة.';
+    } else if (now < start) {
+      lessonInfo.textContent =
+        'الحجز مؤكد. زر الدخول غادي يبان هنا ملي يوصل وقت الحصة.';
+    } else if (now < end) {
+      lessonInfo.textContent =
+        'وصل وقت الحصة. اضغط للدخول، واسمح باستعمال الميكروفون والكاميرا.';
+      joinLink.hidden = false;
+    } else {
+      status.textContent = 'انتهى موعد الحصة';
+      status.style.color = '#555';
+      lessonInfo.textContent = 'وقت الدخول لهاد الحصة سالا.';
+    }
+  }
+
+  updateLessonAccess();
+  const lessonTimer = setInterval(() => {
+  if (!card.isConnected) {
+    clearInterval(lessonTimer);
+    return;
+  }
+
+  updateLessonAccess();
+}, 1000);
+}
+if (booking.status === 'pending') {
+  const cancelButton = document.createElement('button');
+  cancelButton.type = 'button';
+  cancelButton.textContent = 'إلغاء طلب الحجز';
+  cancelButton.style.cssText =
+    'background:#b91c1c;color:white;border:0;' +
+    'padding:12px 18px;border-radius:8px;cursor:pointer;';
+
+  cancelButton.addEventListener('click', async () => {
+    if (!confirm('واش متأكد بغيتي تلغي هاد الطلب؟')) return;
+
+    cancelButton.disabled = true;
+    message.textContent = 'جاري إلغاء الطلب...';
+
+    try {
+      const response = await fetch(
+        `/bookings/${booking.id}/cancel`,
+        { method: 'POST' }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'تعذر إلغاء الطلب');
+      }
+
+      await loadMyBookings();
+      message.textContent = 'تلغى الطلب بنجاح.';
+    } catch (error) {
+      message.textContent =
+        error.message || 'تعذر الاتصال بالسيرفر.';
+    } finally {
+      cancelButton.disabled = false;
+    }
+  });
+
+  card.appendChild(cancelButton);
+}
+        bookingsList.appendChild(card);
+      }
+    }
+async function refreshBookings() {
+  try {
+    if (!document.hidden &&
+        !bookingsList.contains(document.activeElement)) {
+      await loadMyBookings();
+    }
+  } catch (error) {
+    message.textContent =
+      'تعذر تحديث الحجوزات. غادي نعاودو المحاولة تلقائياً.';
+  } finally {
+    setTimeout(refreshBookings, 15000);
+  }
+}
+
+refreshBookings();
+  </script>
+</body>
+</html>

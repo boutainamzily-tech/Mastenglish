@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>أداء الاشتراك - Mastenglish.ma</title>
+  <style>
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+
+    body {
+      margin: 0;
+      padding: 24px 16px;
+      background: #f4f6f9;
+      color: #24324a;
+      font-family: Arial, sans-serif;
+      line-height: 1.8;
+    }
+
+    main {
+      max-width: 720px;
+      margin: auto;
+      padding: 26px;
+      background: white;
+      border-radius: 16px;
+    }
+
+    a, h1, h2 { color: #1e3a8a; }
+
+    .transfer, .paypal-test {
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 12px;
+    }
+
+    .transfer {
+      background: #e9f4ee;
+      border: 1px solid #c6dfd1;
+    }
+
+    .paypal-test {
+      background: #eef4ff;
+      border: 1px solid #cbdaf5;
+    }
+
+    .paypal-button {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 8px;
+      background: #1e3a8a;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .paypal-button:focus-visible {
+      outline: 3px solid #1e3a8a;
+      outline-offset: 3px;
+    }
+
+    #paymentRib {
+      display: block;
+      direction: ltr;
+      text-align: start;
+      overflow-wrap: anywhere;
+      user-select: all;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <a href="my-schedule.html">الرجوع لجدول حصصي</a>
+    <h1>أداء الاشتراك</h1>
+    <p id="paymentMessage" role="status">جاري تحميل معلومات الأداء...</p>
+
+    <section id="paymentDetails" hidden>
+      <h2>الثمن الشهري حسب البرنامج</h2>
+      <ul id="paymentPlans"></ul>
+      <p>قبل التحويل، تأكّد مع الأستاذة من المجموعة والشهر اللي غادي تخلّص عليه.</p>
+
+      <section id="paypalTest" class="paypal-test" hidden>
+        <h2>تجربة الأداء بالكارت </h2>
+        <p>المبلغ 1 دولار للتجربة فقط. إلا كملتي الأداء، غادي تكون خلصة حقيقية وما غاديش تفعّل الاشتراك.</p>
+        <a id="paypalTestLink" class="paypal-button"
+           target="_blank" rel="noopener noreferrer">
+          فتح صفحة تجربة الأداء (1 USD)
+        </a>
+      </section>
+
+      <div class="transfer">
+        <h2>معلومات التحويل البنكي</h2>
+        <p>البنك: <strong id="paymentBank"></strong></p>
+        <p>المستفيد: <strong id="paymentBeneficiary"></strong></p>
+        <p>RIB: <strong id="paymentRib"></strong></p>
+      </div>
+
+      <p>من بعد ما يوصل التحويل، غتفعّل ليك الاشتراك 
+      </p>
+    </section>
+  </main>
+
+  <script>
+    function showLocalPaypalTest() {
+      const isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+      if (!isLocal) return;
+
+      document.getElementById('paypalTestLink').href =
+        'https://www.paypal.com/ncp/payment/6UAJ7Q88AW33U';
+      document.getElementById('paypalTest').hidden = false;
+    }
+
+    async function loadPaymentInfo() {
+      const message = document.getElementById('paymentMessage');
+
+      try {
+        const response = await fetch('/my-payment-info', {
+          cache: 'no-store'
+        });
+
+        if (response.status === 401) {
+          window.location.href = '/login.html';
+          return;
+        }
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok || !Array.isArray(data.plans)) {
+          throw new Error(data.error || 'تعذر تحميل معلومات الأداء.');
+        }
+
+        const plans = document.getElementById('paymentPlans');
+        plans.replaceChildren();
+
+        for (const plan of data.plans) {
+          const item = document.createElement('li');
+          item.textContent =
+            `${plan.group_name} — ${plan.monthly_amount} درهم فالشهر`;
+          plans.appendChild(item);
+        }
+
+        document.getElementById('paymentBank').textContent = data.bank;
+        document.getElementById('paymentBeneficiary').textContent = data.beneficiary;
+        document.getElementById('paymentRib').textContent = data.rib;
+        document.getElementById('paymentDetails').hidden = false;
+        message.textContent = 'الأداء كيتم بالتحويل البنكي.';
+        showLocalPaypalTest();
+      } catch (error) {
+        message.textContent = error.message;
+      }
+    }
+
+    loadPaymentInfo();
+  </script>
+</body>
+</html>

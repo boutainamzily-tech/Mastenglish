@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدرس 1: فعل الكون (Verb to Be) - Mastenglish.ma</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            text-align: right;
+        }
+        header {
+            background-color: #1e3c72;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+        }
+        nav a:hover {
+            color: #ffcc00;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        h1 {
+            color: #1e3c72;
+            margin-top: 0;
+            font-size: 26px;
+            border-bottom: 3px solid #ffcc00;
+            padding-bottom: 10px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #1e3c72;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .back-link:hover {
+            color: #ffcc00;
+        }
+        .video-box {
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 30px 0;
+            text-align: center;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        .section-title {
+            color: #1e3c72;
+            font-size: 20px;
+            margin-top: 30px;
+            border-right: 4px solid #ffcc00;
+            padding-right: 10px;
+        }
+        p, li {
+            color: #444;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        ul {
+            padding-right: 20px;
+        }
+        .example-box {
+            background: #f0f4f8;
+            border-right: 4px solid #1e3c72;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .example-box p {
+            margin: 5px 0;
+        }
+        .quiz-box {
+            background: #fffbe6;
+            border: 2px dashed #ffcc00;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+        .quiz-box h3 {
+            color: #1e3c72;
+            margin-top: 0;
+        }
+        .question-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+        }
+        .question-card p {
+            font-weight: bold;
+            color: #1e3c72;
+            margin-top: 0;
+        }
+        .quiz-options label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background: #fafafa;
+        }
+        .quiz-options label:hover {
+            background: #f1f1f1;
+        }
+        .explanation {
+            font-size: 14px;
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct-exp {
+            background: #e2f0d9;
+            color: #385723;
+        }
+        .wrong-exp {
+            background: #fce4d6;
+            color: #c65911;
+        }
+        .submit-btn {
+            background-color: #1e3c72;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .submit-btn:hover {
+            background-color: #ffcc00;
+            color: #1e3c72;
+        }
+        #result-box {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Mastenglish<span style="color: #ffcc00;">.ma</span></div>
+        <nav>
+            <a href="index.html">الرئيسية</a>
+            <a href="grammar.html">قواعد الإنجليزية</a>
+            <a href="verbs-category.html">الأفعال والأزمنة</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="verbs-category.html" class="back-link">← الرجوع إلى قائمة الأفعال</a>
+        
+        <h1>الدرس 1: فعل الكون (Verb to Be)</h1>
+        <p>مرحباً بك في أول درس أساسي! اليوم غادي نتعرفو على أهم فعل في اللغة الإنجليزية اللي هو <strong>Verb to Be</strong> (فعل الكون)، وكيفاش كنستعملوه باش نعبروا على شكون حنا، فين كاينين، ولا الحالة ديالنا بالدارجة المبسطة.</p>
+
+        <div class="video-box">
+            <p>🎥 [مكان الفيديو المسجل - شرح الشرح بالصوت والصورة]</p>
+        </div>
+
+        <h2 class="section-title">شنو هو Verb to Be؟</h2>
+        <p>بالدارجة، هو بحال "أنا هو"، "هو كاين"، "نحن نتواجد"... في الإنجليزية كنستعملوه بزاف فاش نبغيو نعرفوا برأسنا، نعطيو العمر، الحالة، أو المكان.</p>
+        
+        <p>في الحاضر (Present)، كينقسم لثلاثة ديال الأشكال حسب الضمير:</p>
+        <ul>
+            <li><strong>Am:</strong> كتصاحب غير الضمير <strong>I</strong> (أنا) ➔ <em>I am</em></li>
+            <li><strong>Is:</strong> كتصاحب الضمير المفرد الغائب <strong>He, She, It</strong> (هو، هي، لغير العاقل) ➔ <em>He is, She is</em></li>
+            <li><strong>Are:</strong> كتصاحب الجمع والضمائر <strong>We, You, They</strong> (نحن، أنتم، هم) ➔ <em>We are, They are</em></li>
+        </ul>
+
+        <h2 class="section-title">أمثلة تطبيقية من الحياة اليومية</h2>
+        
+        <div class="example-box">
+            <p><strong>I am a teacher.</strong></p>
+            <p><em>بالدارجة:</em> أنا أستاذة / معلمة.</p>
+        </div>
+
+        <div class="example-box">
+            <p><strong>She is happy today.</strong></p>
+            <p><em>بالدارجة:</em> هي فرحانة اليوم.</p>
+        </div>
+
+        <div class="example-box">
+            <p><strong>They are in Rabat.</strong></p>
+            <p><em>بالدارجة:</em> هما كاينين في الرباط</p>
+        </div>
+
+        <!-- اختبار من 10 أسئلة مع التصحيح الفوري والشرح -->
+        <div class="quiz-box">
+            <h3>🧠 اختبار شامل للدرس (10 أسئلة)</h3>
+            <p>جاوب على الأسئلة التالية لاختبار فهمك:</p>
+
+            <form id="quizForm">
+                
+                <!-- س 1 -->
+                <div class="question-card">
+                    <p>1. I ......... a student.</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="am"> am</label>
+                        <label><input type="radio" name="q1" value="is"> is</label>
+                        <label><input type="radio" name="q1" value="are"> are</label>
+                    </div>
+                    <div id="exp1" class="explanation"></div>
+                </div>
+
+                <!-- س 2 -->
+                <div class="question-card">
+                    <p>2. She ......... my best friend.</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="am"> am</label>
+                        <label><input type="radio" name="q2" value="is"> is</label>
+                        <label><input type="radio" name="q2" value="are"> are</label>
+                    </div>
+                    <div id="exp2" class="explanation"></div>
+                </div>
+
+                <!-- س 3 -->
+                <div class="question-card">
+                    <p>3. We ......... happy to learn English.</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="am"> am</label>
+                        <label><input type="radio" name="q3" value="is"> is</label>
+                        <label><input type="radio" name="q3" value="are"> are</label>
+                    </div>
+                    <div id="exp3" class="explanation"></div>
+                </div>
+
+                <!-- س 4 -->
+                <div class="question-card">
+                    <p>4. They ......... in the classroom.</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="am"> am</label>
+                        <label><input type="radio" name="q4" value="is"> is</label>
+                        <label><input type="radio" name="q4" value="are"> are</label>
+                    </div>
+                    <div id="exp4" class="explanation"></div>
+                </div>
+
+                <!-- س 5 -->
+                <div class="question-card">
+                    <p>5. He ......... a software developer.</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q5" value="am"> am</label>
+                        <label><input type="radio" name="q5" value="is"> is</label>
+                        <label><input type="radio" name="q5" value="are"> are</label>
+                    </div>
+                    <div id="exp5" class="explanation"></div>
+                </div>
+
+                <!-- س 6 -->
+                <div class="question-card">
+                    <p>6. You ......... very kind.</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q6" value="am"> am</label>
+                        <label><input type="radio" name="q6" value="is"> is</label>
+                        <label><input type="radio" name="q6" value="are"> are</label>
+                    </div>
+                    <div id="exp6" class="explanation"></div>
+                </div>
+
+                <!-- س 7 -->
+                <div class="question-card">
+                    <p>7. The cat ......... on the chair.</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q7" value="am"> am</label>
+                        <label><input type="radio" name="q7" value="is"> is</label>
+                        <label><input type="radio" name="q7" value="are"> are</label>
+                    </div>
+                    <div id="exp7" class="explanation"></div>
+                </div>
+
+                <!-- س 8 -->
+                <div class="question-card">
+                    <p>8. My brother and I ......... from Morocco.</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q8" value="am"> am</label>
+                        <label><input type="radio" name="q8" value="is"> is</label>
+                        <label><input type="radio" name="q8" value="are"> are</label>
+                    </div>
+                    <div id="exp8" class="explanation"></div>
+                </div>
+
+                <!-- س 9 -->
+                <div class="question-card">
+                    <p>9. The weather ......... nice today.</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q9" value="am"> am</label>
+                        <label><input type="radio" name="q9" value="is"> is</label>
+                        <label><input type="radio" name="q9" value="are"> are</label>
+                    </div>
+                    <div id="exp9" class="explanation"></div>
+                </div>
+
+                <!-- س 10 -->
+                <div class="question-card">
+                    <p>10. Books ......... very important for learning.</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q10" value="am"> am</label>
+                        <label><input type="radio" name="q10" value="is"> is</label>
+                        <label><input type="radio" name="q10" value="are"> are</label>
+                    </div>
+                    <div id="exp10" class="explanation"></div>
+                </div>
+
+                <button type="button" class="submit-btn" onclick="checkQuiz()">تصحيح الإجابات ورؤية النتيجة</button>
+            </form>
+
+            <div id="result-box"></div>
+        </div>
+
+    </div>
+
+    <script>
+        function checkQuiz() {
+            const answers = {
+                q1: { correct: 'am', exp: 'الجواب الصحيح هو "am" حيت الضمير هو I (أنا).' },
+                q2: { correct: 'is', exp: 'الجواب الصحيح هو "is" حيت She (هي) مفرد غائب.' },
+                q3: { correct: 'are', exp: 'الجواب الصحيح هو "are" حيت We (نحن) ضمير جمع.' },
+                q4: { correct: 'are', exp: 'الجواب الصحيح هو "are" حيت They (هم) ضمير جمع.' },
+                q5: { correct: 'is', exp: 'الجواب الصحيح هو "is" حيت He (هو) مفرد غائب.' },
+                q6: { correct: 'are', exp: 'الجواب الصحيح هو "are" حيت You كتستعمل للجمع وللمفرد وكتدي دائماً are.' },
+                q7: { correct: 'is', exp: 'الجواب الصحيح هو "is" حيت The cat قطة واحدة (مفرد غير عاقل يعوض بـ It).' },
+                q8: { correct: 'are', exp: 'الجواب الصحيح هو "are" حيت My brother and I (أخي وأنا) صبجنا جمع (نحن).' },
+                q9: { correct: 'is', exp: 'الجواب الصحيح هو "is" حيت The weather الطقس مفرد غير عاقل.' },
+                q10: { correct: 'are', exp: 'الجواب الصحيح هو "are" حيت Books كتب جمع.' }
+            };
+
+            let score = 0;
+            let total = 10;
+
+            for (let key in answers) {
+                let selected = document.querySelector(`input[name="${key}"]:checked`);
+                let expDiv = document.getElementById('exp' + key.replace('q', ''));
+                expDiv.style.display = 'block';
+
+                if (selected) {
+                    if (selected.value === answers[key].correct) {
+                        score++;
+                        expDiv.className = 'explanation correct-exp';
+                        expDiv.innerHTML = '✅ جواب صحيح! ' + answers[key].exp;
+                    } else {
+                        expDiv.className = 'explanation wrong-exp';
+                        expDiv.innerHTML = '❌ جواب خطأ. ' + answers[key].exp;
+                    }
+                } else {
+                    expDiv.className = 'explanation wrong-exp';
+                    expDiv.innerHTML = '⚠️ لم تقم بالإجابة على هذا السؤال! ' + answers[key].exp;
+                }
+            }
+
+            let resultBox = document.getElementById('result-box');
+            resultBox.style.display = 'block';
+
+            let percentage = (score / total) * 100;
+            let msg = "";
+
+            if (percentage >= 80) {
+                resultBox.style.background = '#e2f0d9';
+                resultBox.style.color = '#385723';
+                msg = `🎉 تبارك الله عليك! جبتي ${score} من ${10}. مستوى رفيع وفهمتي الدرس مية في المية!`;
+            } else if (percentage >= 50) {
+                resultBox.style.background = '#fff2cc';
+                resultBox.style.color = '#7f6000';
+                msg = `👍 مزيان! جبتي ${score} من ${10}. نتيجة مقبولة ولكن عاود قرا الشرح باش تضبطها أكتر!`;
+            } else {
+                resultBox.style.background = '#fce4d6';
+                resultBox.style.color = '#c65911';
+                msg = `💪 ما تيقزش! جبتي ${score} من ${10}. البداية ديما كتكون هكا، عاود تشوف الفيديو والشرح وغادي تولي طوب!`;
+            }
+
+            resultBox.innerHTML = msg;
+        }
+    </script>
+
+</body>
+</html>

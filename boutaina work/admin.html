@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة التلاميذ - Mastenglish.ma</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      color: #222;
+    }
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 24px;
+      background: white;
+      border-radius: 12px;
+    }
+    h1 { color: #1e3a8a; }
+    .student {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 18px;
+      margin: 16px 0;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 12px;
+    }
+    button {
+      border: 0;
+      border-radius: 7px;
+      padding: 10px 14px;
+      background: #1e3a8a;
+      color: white;
+      cursor: pointer;
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+    input { padding: 8px; }
+    #message { min-height: 24px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>إدارة التلاميذ</h1>
+    <section class="student">
+  <h2>طلبات حجز الحصص التجريبية</h2>
+  <p id="bookingsMessage" role="status">جاري تحميل الطلبات...</p>
+  <div id="bookingsList"></div>
+</section>
+    <section style="border: 1px solid #ddd; border-radius: 10px; padding: 18px; margin: 20px 0;">
+  <h2>مواعيد الحصص التجريبية</h2>
+  <p>اختاري المواعيد اللي متاحة عندك. جميع الأوقات بتوقيت المغرب.</p>
+
+  <form id="slotForm">
+    <div class="actions">
+      <div>
+        <label for="slotDate">النهار</label><br>
+        <input id="slotDate" type="date" required>
+      </div>
+
+      <div>
+        <label for="slotStart">ساعة البداية</label><br>
+        <input id="slotStart" type="time" required>
+      </div>
+
+      <div>
+        <label for="slotEnd">ساعة النهاية</label><br>
+        <input id="slotEnd" type="time" required>
+      </div>
+    </div>
+
+    <button id="saveSlotButton" type="submit"
+            disabled style="margin-top: 16px;">
+      إضافة الموعد
+    </button>
+  </form>
+
+  <p id="slotMessage" role="status"></p>
+  <div id="slotsList"></div>
+</section>
+<section class="student">
+    <h2>مجموعات الدراسة</h2>
+    <p>هنا كتوجدي المجموعات والحصص الفردية للدراسة المنتظمة.</p>
+
+    <form id="classGroupForm">
+        <div class="actions">
+            <div>
+                <label for="classGroupName">اسم المجموعة</label><br>
+                <input id="classGroupName" type="text"
+                       placeholder="مثلاً: كبار — المستوى الأول"
+                       minlength="2" maxlength="80" required>
+            </div>
+
+            <div>
+                <label for="classGroupProgram">البرنامج</label><br>
+                <select id="classGroupProgram" required>
+                    <option value="">اختاري البرنامج</option>
+                    <option value="kids">الصغار والمراهقون</option>
+                    <option value="adults">الكبار</option>
+                    <option value="one-on-one">حصص فردية</option>
+                </select>
+            </div>
+
+            <button type="submit">إضافة المجموعة</button>
+        </div>
+    </form>
+
+    <p id="classGroupMessage" role="status"></p>
+    <ul id="classGroupsList"></ul>
+    <h3>إضافة تلميذ للمجموعة</h3>
+
+<form id="classEnrollForm" class="actions">
+    <div>
+        <label for="enrollGroup">المجموعة</label><br>
+        <select id="enrollGroup" required>
+            <option value="">اختاري المجموعة</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="enrollStudent">التلميذ</label><br>
+        <select id="enrollStudent" required>
+            <option value="">اختاري التلميذ</option>
+        </select>
+    </div>
+
+    <button id="enrollSubmit" type="submit" disabled>إضافة التلميذ</button>
+    <button id="enrollRefresh" type="button">تحديث الاختيارات</button>
+</form>
+
+<p id="classEnrollMessage" role="status"></p>
+<h3>برمجة حصة منتظمة</h3>
+<p>اختاري النهار وساعة البداية بتوقيت المغرب. مدة الحصة 40 دقيقة.</p>
+
+<form id="classSessionForm" class="actions">
+    <div>
+        <label for="sessionGroup">المجموعة</label><br>
+        <select id="sessionGroup" required>
+            <option value="">اختاري المجموعة</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="sessionDate">النهار</label><br>
+        <input id="sessionDate" type="date" required>
+    </div>
+
+    <div>
+        <label for="sessionStart">ساعة البداية</label><br>
+        <input id="sessionStart" type="time" required>
+    </div>
+
+    <button id="sessionSubmit" type="submit" disabled>إضافة حصة</button>
+</form>
+
+<p id="classSessionMessage" role="status"></p>
+<h3>الحصص المنتظمة المقبلة</h3>
+<button id="refreshClassSessions" type="button">تحديث لائحة الحصص</button>
+<p id="classSessionsStatus" role="status"></p>
+<ul id="classSessionsList"></ul>
+
+<script>
+(() => {
+    const list = document.getElementById('classSessionsList');
+    const status = document.getElementById('classSessionsStatus');
+    const refresh = document.getElementById('refreshClassSessions');
+
+    const formatter = new Intl.DateTimeFormat('ar-MA', {
+        timeZone: 'Africa/Casablanca',
+        dateStyle: 'medium',
+        timeStyle: 'short'
+    });
+
+    async function loadSessions() {
+        refresh.disabled = true;
+        status.textContent = 'جاري تحميل الحصص...';
+
+        try {
+            const response = await fetch('/admin/class-sessions', {
+                cache: 'no-store'
+            });
+
+            if (response.status === 401) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            if (!response.ok) {
+                throw new Error('تعذر تحميل لائحة الحصص.');
+            }
+
+            const { sessions } = await response.json();
+            list.replaceChildren();
+
+            for (const session of sessions) {
+                const start = new Date(session.starts_at);
+                const end = new Date(start.getTime() + 40 * 60 * 1000);
+                const item = document.createElement('li');
+
+                item.textContent =
+                    `${session.group_name} — ${formatter.format(start)}` +
+                    ` حتى ${formatter.format(end)}`;
+
+                list.appendChild(item);
+            }
+
+            status.textContent = sessions.length
+                ? 'جميع الأوقات بتوقيت المغرب.'
+                : 'ما كايناش حصص منتظمة مبرمجة فالمستقبل.';
+        } catch (error) {
+            status.textContent = error.message;
+        } finally {
+            refresh.disabled = false;
+        }
+    }
+
+    refresh.addEventListener('click', loadSessions);
+    loadSessions();
+})();
+</script>
+
+<script>
+(() => {
+    const form = document.getElementById('classSessionForm');
+    const group = document.getElementById('sessionGroup');
+    const date = document.getElementById('sessionDate');
+    const start = document.getElementById('sessionStart');
+    const submit = document.getElementById('sessionSubmit');
+    const message = document.getElementById('classSessionMessage');
+
+    async function readJson(url, options) {
+        const response = await fetch(url, options);
+
+        if (response.status === 401) {
+            window.location.href = '/login.html';
+            throw new Error('خاصك تسجلي الدخول.');
+        }
+
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) {
+            throw new Error(data.error || 'تعذر تنفيذ الطلب.');
+        }
+
+        return data;
+    }
+
+    const formatter = new Intl.DateTimeFormat('ar-MA', {
+        timeZone: 'Africa/Casablanca',
+        dateStyle: 'medium',
+        timeStyle: 'short'
+    });
+
+    async function loadSessionGroups() {
+        try {
+            const { groups } = await readJson('/admin/class-groups', {
+                cache: 'no-store'
+            });
+
+            for (const item of groups) {
+                group.add(new Option(item.name, item.id));
+            }
+
+            submit.disabled = groups.length === 0;
+            if (submit.disabled) {
+                message.textContent = 'زيدي مجموعة أولاً، ومن بعد حدّثي الصفحة.';
+            }
+        } catch (error) {
+            message.textContent = error.message;
+        }
+    }
+
+    form.addEventListener('submit', async event => {
+        event.preventDefault();
+        submit.disabled = true;
+        message.textContent = 'جاري حفظ الموعد...';
+
+        try {
+            const { session } = await readJson(
+                `/admin/class-groups/${Number(group.value)}/sessions`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        date: date.value,
+                        start_time: start.value
+                    })
+                }
+            );
+
+            message.textContent =
+                `تحفظات الحصة: ${formatter.format(new Date(session.starts_at))}` +
+                ` حتى ${formatter.format(new Date(session.ends_at))}.`;
+        } catch (error) {
+            message.textContent = error.message;
+        } finally {
+            submit.disabled = false;
+        }
+    });
+
+    loadSessionGroups();
+})();
+</script>
+
+<script>
+(() => {
+    const form = document.getElementById('classEnrollForm');
+    const group = document.getElementById('enrollGroup');
+    const student = document.getElementById('enrollStudent');
+    const submit = document.getElementById('enrollSubmit');
+    const refresh = document.getElementById('enrollRefresh');
+    const message = document.getElementById('classEnrollMessage');
+
+    async function readJson(url, options) {
+        const response = await fetch(url, options);
+
+        if (response.status === 401) {
+            window.location.href = '/login.html';
+            throw new Error('خاصك تسجلي الدخول.');
+        }
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+            throw new Error(data.error || 'تعذر تنفيذ الطلب.');
+        }
+
+        return data;
+    }
+
+    async function loadOptions() {
+        submit.disabled = true;
+        refresh.disabled = true;
+        message.textContent = 'جاري تحميل الاختيارات...';
+
+        try {
+            const [groups, students] = await Promise.all([
+                readJson('/admin/class-groups', { cache: 'no-store' }),
+                readJson('/admin/students', { cache: 'no-store' })
+            ]);
+
+            group.replaceChildren(new Option('اختاري المجموعة', ''));
+            student.replaceChildren(new Option('اختاري التلميذ', ''));
+
+            for (const item of groups.groups) {
+                group.add(new Option(item.name, item.id));
+            }
+
+            for (const item of students.students) {
+                student.add(new Option(`${item.name} — ${item.email}`, item.id));
+            }
+
+            submit.disabled = !groups.groups.length || !students.students.length;
+            message.textContent = submit.disabled
+                ? 'خاص تكون عندك مجموعة وحساب تلميذ باش تديري الإضافة.'
+                : '';
+        } catch (error) {
+            message.textContent = error.message;
+        } finally {
+            refresh.disabled = false;
+        }
+    }
+
+    refresh.addEventListener('click', loadOptions);
+
+    form.addEventListener('submit', async event => {
+        event.preventDefault();
+        submit.disabled = true;
+        refresh.disabled = true;
+        message.textContent = 'جاري إضافة التلميذ...';
+
+        try {
+            await readJson(`/admin/class-groups/${Number(group.value)}/enroll`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ student_id: Number(student.value) })
+            });
+
+            message.textContent = 'تزاد التلميذ للمجموعة بنجاح.';
+            student.value = '';
+        } catch (error) {
+            message.textContent = error.message;
+        } finally {
+            submit.disabled = false;
+            refresh.disabled = false;
+        }
+    });
+
+    loadOptions();
+})();
+</script>
+</section>
+
+<script>
+(() => {
+    const form = document.getElementById('classGroupForm');
+    const nameInput = document.getElementById('classGroupName');
+    const programInput = document.getElementById('classGroupProgram');
+    const message = document.getElementById('classGroupMessage');
+    const list = document.getElementById('classGroupsList');
+    const button = form.querySelector('button[type="submit"]');
+
+    const programs = {
+        kids: 'الصغار والمراهقون',
+        adults: 'الكبار',
+        'one-on-one': 'حصص فردية'
+    };
+
+    async function loadGroups() {
+        const response = await fetch('/admin/class-groups', {
+            cache: 'no-store'
+        });
+
+        if (!response.ok) {
+            throw new Error('تعذر تحميل المجموعات. حدّثي الصفحة.');
+        }
+
+        const data = await response.json();
+
+        list.replaceChildren();
+
+        if (data.groups.length === 0) {
+            const item = document.createElement('li');
+            item.textContent = 'مازال ما زدتي حتى مجموعة.';
+            list.appendChild(item);
+            return;
+        }
+
+        for (const group of data.groups) {
+            const item = document.createElement('li');
+            item.textContent =
+                `${group.name} — ${programs[group.program] || group.program}`;
+            list.appendChild(item);
+        }
+    }
+
+    form.addEventListener('submit', async event => {
+        event.preventDefault();
+
+        button.disabled = true;
+        message.textContent = 'جاري حفظ المجموعة...';
+
+        try {
+            const response = await fetch('/admin/class-groups', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: nameInput.value.trim(),
+                    program: programInput.value
+                })
+            });
+
+            const data = await response.json().catch(() => ({}));
+
+            if (!response.ok) {
+                throw new Error(data.error || 'تعذر إنشاء المجموعة.');
+            }
+
+            form.reset();
+            message.textContent = 'تزادت المجموعة بنجاح.';
+
+            try {
+                await loadGroups();
+            } catch {
+                message.textContent =
+                    'تحفظات المجموعة، ولكن اللائحة ما تحدّثاتش. حدّثي الصفحة.';
+            }
+        } catch (error) {
+            message.textContent = error.message;
+        } finally {
+            button.disabled = false;
+        }
+    });
+
+    loadGroups().catch(error => {
+        message.textContent = error.message;
+    });
+})();
+</script>
+    <p>فعّلي التجربة قبيل الحصة. فعّلي الشهر فقط بعدما تتأكدي أن الخلاص وصل.</p>
+    <label for="studentSearch">البحث عن تلميذ:</label>
+<input
+  id="studentSearch"
+  type="search"
+  placeholder="كتبي الاسم أو الإيميل"
+  style="width: 100%; box-sizing: border-box; margin: 10px 0;"
+>
+<p id="searchResult" role="status"></p>
+    <p id="message">جاري تحميل التلاميذ...</p>
+    <div id="students"></div>
+  </main>
+
+  <script>
+    const message = document.getElementById('message');
+    const studentsBox = document.getElementById('students');
+    const studentSearch = document.getElementById('studentSearch');
+const searchResult = document.getElementById('searchResult');
+
+function filterStudents() {
+    const query = studentSearch.value.trim().toLowerCase();
+    let visibleCount = 0;
+
+    for (const card of studentsBox.children) {
+        const matches = card.dataset.search.includes(query);
+        card.hidden = !matches;
+
+        if (matches) visibleCount++;
+    }
+
+    searchResult.textContent = query
+        ? (visibleCount
+            ? `عدد النتائج: ${visibleCount}`
+            : 'ما لقينا حتى تلميذ بهاد الاسم أو الإيميل.')
+        : '';
+}
+
+studentSearch.addEventListener('input', filterStudents);
+
+    function currentMonthInMorocco() {
+      const parts = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Africa/Casablanca',
+        year: 'numeric',
+        month: '2-digit'
+      }).formatToParts(new Date());
+      const year = parts.find(part => part.type === 'year').value;
+      const month = parts.find(part => part.type === 'month').value;
+      return `${year}-${month}`;
+    }
+
+    async function sendAction(url, body) {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'وقع مشكل');
+      message.textContent = 'تفعّل بنجاح';
+      await loadStudents();
+    }
+
+    async function loadStudents() {
+      const response = await fetch('/admin/students');
+      if (response.status === 401) {
+        window.location.href = '/login.html';
+        return;
+      }
+      if (!response.ok) {
+        message.textContent = 'هاد الصفحة خاصة بالإدارة، أو وقع مشكل فالسيرفر.';
+        return;
+      }
+
+      const data = await response.json();
+      studentsBox.replaceChildren();
+      message.textContent = data.students.length
+        ? 'اختاري التلميذ ونوع التفعيل.'
+        : 'مازال ما كاين حتى تلميذ.';
+
+      for (const student of data.students) {
+        const card = document.createElement('div');
+        card.className = 'student';
+        card.dataset.search = `${student.name} ${student.email}`.toLowerCase();
+
+        const title = document.createElement('h2');
+        title.textContent = student.name;
+        card.appendChild(title);
+
+        const email = document.createElement('p');
+        email.textContent = student.email;
+        card.appendChild(email);
+const status = document.createElement('p');
+const currentMonth = currentMonthInMorocco();
+const paidMonths = (student.paid_months || '').split(',');
+const active = paidMonths.includes(`${currentMonth}-01`);
+
+let subscriptionStatus;
+
+if (active) {
+    subscriptionStatus = `اشتراك ${currentMonth}: مفعّل`;
+    status.style.color = '#15803d';
+} else if (student.paid_until &&
+           student.paid_until <= `${currentMonth}-01`) {
+    subscriptionStatus = 'الاشتراك السابق سالا، هاد الشهر ما مفعّلش';
+    status.style.color = '#b91c1c';
+} else {
+    subscriptionStatus = 'اشتراك هاد الشهر ما مفعّلش';
+    status.style.color = '#b91c1c';
+}
+
+let trialStatus = 'ما تفعّلاتش بعد';
+
+if (student.trial_count > 0) {
+    const startsAt = new Date(student.trial_starts_at).getTime();
+    const endsAt = new Date(student.trial_ends_at).getTime();
+    const now = Date.now();
+
+    if (Number.isFinite(startsAt) && Number.isFinite(endsAt)) {
+        const endTime = new Intl.DateTimeFormat('ar-MA', {
+            timeZone: 'Africa/Casablanca',
+            dateStyle: 'short',
+            timeStyle: 'short'
+        }).format(new Date(endsAt));
+
+        if (now < startsAt) {
+            trialStatus = `مازال ما بداتش، النهاية: ${endTime}`;
+        } else if (now < endsAt) {
+            trialStatus = `سارية حتى ${endTime}`;
+        } else {
+            trialStatus = `سالات فـ ${endTime}`;
+        }
+    } else {
+        trialStatus = 'سبق تفعيلها، وقت النهاية غير متوفر';
+    }
+}
+
+status.textContent =
+    `${subscriptionStatus} | التجربة: ${trialStatus}`;
+card.appendChild(status);
+
+const actions = document.createElement('div');
+actions.className = 'actions';
+
+const trialButton = document.createElement('button');
+trialButton.textContent = 'تفعيل تجربة ساعتين';
+trialButton.disabled = student.trial_count > 0;
+trialButton.onclick = async () => {
+    trialButton.disabled = true;
+    try {
+        await sendAction(`/admin/students/${student.id}/trial`, {});
+    } catch (error) {
+        message.textContent = error.message;
+        trialButton.disabled = false;
+    }
+};
+actions.appendChild(trialButton);
+
+const monthInput = document.createElement('input');
+monthInput.type = 'month';
+monthInput.value = currentMonthInMorocco();
+monthInput.setAttribute('aria-label', `الشهر الخاص بـ ${student.name}`);
+actions.appendChild(monthInput);
+
+const monthButton = document.createElement('button');
+monthButton.textContent = 'تفعيل الشهر بعد تأكيد الخلاص';
+monthButton.onclick = async () => {
+    monthButton.disabled = true;
+    try {
+        await sendAction(`/admin/students/${student.id}/month`, {
+            month: monthInput.value
+        });
+    } catch (error) {
+        message.textContent = error.message;
+    } finally {
+        monthButton.disabled = false;
+    }
+};
+actions.appendChild(monthButton);
+const cancelMonthButton = document.createElement('button');
+cancelMonthButton.textContent = 'إلغاء تفعيل الشهر المختار';
+cancelMonthButton.style.backgroundColor = '#dc2626';
+cancelMonthButton.style.color = 'white';
+
+cancelMonthButton.onclick = async () => {
+    const month = monthInput.value;
+
+    if (!month) {
+        message.textContent = 'اختاري الشهر أولاً';
+        return;
+    }
+
+    if (!confirm(`واش متأكدة تلغي تفعيل شهر ${month} لـ ${student.name}؟`)) {
+        return;
+    }
+
+    cancelMonthButton.disabled = true;
+
+    try {
+        await sendAction(`/admin/students/${student.id}/cancel-month`, {
+            month
+        });
+    } catch (error) {
+        message.textContent = error.message;
+    } finally {
+        cancelMonthButton.disabled = false;
+    }
+};
+
+actions.appendChild(cancelMonthButton);
+
+card.appendChild(actions);
+studentsBox.appendChild(card);
+      }
+
+      filterStudents();
+    }
+
+    loadStudents().catch(error => {
+      console.error(error);
+      message.textContent = 'تعذر الاتصال بالسيرفر.';
+    });
+  </script>
+  <script>
+const slotForm = document.getElementById('slotForm');
+const slotMessage = document.getElementById('slotMessage');
+const slotsList = document.getElementById('slotsList');
+const saveSlotButton = document.getElementById('saveSlotButton');
+
+const slotDateFormatter = new Intl.DateTimeFormat('ar-MA', {
+    timeZone: 'Africa/Casablanca',
+    dateStyle: 'medium',
+    timeStyle: 'short'
+});
+
+async function loadBookingSlots() {
+    const response = await fetch('/admin/booking-slots', {
+        cache: 'no-store'
+    });
+
+    if (response.status === 401) {
+        window.location.href = '/login.html';
+        return;
+    }
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error || 'تعذر تحميل المواعيد');
+    }
+
+    slotsList.replaceChildren();
+
+    if (!data.slots.length) {
+        slotsList.textContent = 'مازال ما زدتي حتى موعد.';
+        return;
+    }
+
+    for (const slot of data.slots) {
+        const item = document.createElement('p');
+        const start = slotDateFormatter.format(new Date(slot.starts_at));
+        const end = slotDateFormatter.format(new Date(slot.ends_at));
+        const state = slot.reserved
+            ? 'محجوز'
+            : (slot.is_open ? 'مفتوح' : 'مغلق');
+
+        item.textContent = `${start} — ${end} | ${state}`;
+        const isFuture = new Date(slot.starts_at).getTime() > Date.now();
+
+if (!slot.reserved && isFuture) {
+    const stateButton = document.createElement('button');
+    stateButton.type = 'button';
+    stateButton.textContent = slot.is_open
+        ? 'إغلاق الموعد'
+        : 'فتح الموعد';
+    stateButton.style.marginInlineStart = '12px';
+    stateButton.style.backgroundColor = slot.is_open
+        ? '#b91c1c'
+        : '#15803d';
+
+    stateButton.onclick = async () => {
+        const isOpen = !Boolean(slot.is_open);
+        const question = isOpen
+            ? 'واش بغيتي تفتحي هاد الموعد للحجز؟'
+            : 'واش بغيتي تسدي هاد الموعد أمام الحجوزات الجديدة؟';
+
+        if (!confirm(question)) return;
+
+        stateButton.disabled = true;
+        slotMessage.textContent = 'جاري تغيير حالة الموعد...';
+
+        try {
+            const response = await fetch(
+                `/admin/booking-slots/${slot.id}/state`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ is_open: isOpen })
+                }
+            );
+
+            if (response.status === 401) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'تعذر تغيير الحالة');
+            }
+
+            await loadBookingSlots();
+            slotMessage.textContent = isOpen
+                ? 'الموعد مفتوح للحجز.'
+                : 'الموعد مغلق أمام الحجوزات الجديدة.';
+        } catch (error) {
+            slotMessage.textContent =
+                error.message || 'تعذر الاتصال بالسيرفر.';
+        } finally {
+            stateButton.disabled = false;
+        }
+    };
+
+    item.appendChild(stateButton);
+}
+        slotsList.appendChild(item);
+    }
+}
+
+slotForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    saveSlotButton.disabled = true;
+    slotMessage.textContent = 'جاري حفظ الموعد...';
+
+    try {
+        const response = await fetch('/admin/booking-slots', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                date: document.getElementById('slotDate').value,
+                start_time: document.getElementById('slotStart').value,
+                end_time: document.getElementById('slotEnd').value
+            })
+        });
+
+        if (response.status === 401) {
+            window.location.href = '/login.html';
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'تعذر حفظ الموعد');
+        }
+
+        slotForm.reset();
+        slotMessage.textContent = 'تحفظ الموعد بنجاح.';
+
+        try {
+            await loadBookingSlots();
+        } catch {
+            slotMessage.textContent =
+                'تحفظ الموعد، ولكن تعذر تحديث اللائحة. حدّثي الصفحة.';
+        }
+    } catch (error) {
+        slotMessage.textContent = error.message || 'تعذر الاتصال بالسيرفر';
+    } finally {
+        saveSlotButton.disabled = false;
+    }
+});
+
+loadBookingSlots()
+    .then(() => {
+        saveSlotButton.disabled = false;
+    })
+    .catch(error => {
+        slotMessage.textContent = error.message;
+    });
+</script>
+<script>
+(async function () {
+    const list = document.getElementById('bookingsList');
+    const notice = document.getElementById('bookingsMessage');
+
+    const programs = {
+        kids: 'الصغار والمراهقون',
+        adults: 'الكبار',
+        'one-on-one': 'حصص فردية خاصة'
+    };
+
+    const statuses = {
+        pending: 'في انتظار التأكيد',
+        confirmed: 'مؤكد',
+        cancelled: 'ملغى',
+        rejected: 'مرفوض',
+        completed: 'الحصة دازت',
+        no_show: 'المستفيد ما حضرش'
+    };
+
+    const formatter = new Intl.DateTimeFormat('ar-MA', {
+        timeZone: 'Africa/Casablanca',
+        dateStyle: 'medium',
+        timeStyle: 'short'
+    });
+
+    try {
+        const response = await fetch('/admin/bookings', {
+            cache: 'no-store'
+        });
+
+        if (response.status === 401) {
+            window.location.href = '/login.html';
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'تعذر تحميل الطلبات');
+        }
+
+        list.replaceChildren();
+        notice.textContent = data.bookings.length
+            ? 'جميع المواعيد بتوقيت المغرب.'
+            : 'مازال ما وصل حتى طلب حجز.';
+
+        for (const booking of data.bookings) {
+            const card = document.createElement('div');
+            card.className = 'student';
+
+            const title = document.createElement('h3');
+            title.textContent =
+                `طلب رقم ${booking.id} — ${booking.learner_name}`;
+            card.appendChild(title);
+
+            const details = [
+                `العمر: ${booking.learner_age}`,
+                `البرنامج: ${programs[booking.program] || booking.program}`,
+                `صاحب الحساب: ${booking.account_name}`,
+                `الإيميل: ${booking.email}`,
+                `البداية: ${formatter.format(new Date(booking.starts_at))}`,
+                `النهاية: ${formatter.format(new Date(booking.ends_at))}`,
+                `الحالة: ${statuses[booking.status] || booking.status}`
+            ];
+
+            for (const detail of details) {
+                const line = document.createElement('p');
+                line.textContent = detail;
+                card.appendChild(line);
+            }
+if (booking.status === 'pending') {
+    const actions = document.createElement('div');
+    actions.className = 'actions';
+
+    const confirmButton = document.createElement('button');
+    confirmButton.type = 'button';
+    confirmButton.textContent = 'تأكيد الحجز';
+
+    const rejectButton = document.createElement('button');
+    rejectButton.type = 'button';
+    rejectButton.textContent = 'رفض الطلب';
+    rejectButton.style.backgroundColor = '#dc2626';
+
+    async function saveDecision(decision) {
+        const question = decision === 'confirmed'
+            ? `واش تأكدي الحجز رقم ${booking.id}؟`
+            : `واش ترفضي الطلب رقم ${booking.id}؟`;
+
+        if (!confirm(question)) return;
+
+        confirmButton.disabled = true;
+        rejectButton.disabled = true;
+        notice.textContent = 'جاري حفظ القرار...';
+
+        try {
+            const response = await fetch(
+                `/admin/bookings/${booking.id}/decision`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ decision })
+                }
+            );
+
+            if (response.status === 401) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'تعذر حفظ القرار');
+            }
+
+            window.location.reload();
+        } catch (error) {
+            notice.textContent = error.message;
+            confirmButton.disabled = false;
+            rejectButton.disabled = false;
+        }
+    }
+
+    confirmButton.onclick = () => saveDecision('confirmed');
+    rejectButton.onclick = () => saveDecision('rejected');
+
+    actions.append(confirmButton, rejectButton);
+    card.appendChild(actions);
+}
+            list.appendChild(card);
+        }
+    } catch (error) {
+        notice.textContent = error.message || 'تعذر الاتصال بالسيرفر';
+    }
+})();
+</script>
+<style>
+    .admin-shortcuts {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 12px;
+        margin: 0 0 18px;
+        background: #eef3ff;
+        border: 1px solid #d7e2ff;
+        border-radius: 12px;
+    }
+
+    .admin-shortcuts button {
+        background: white;
+        color: #1e3a8a;
+        border: 1px solid #bfcff4;
+    }
+
+    .admin-shortcuts button[aria-pressed="true"] {
+        background: #1e3a8a;
+        color: white;
+    }
+
+    .admin-shortcuts button:focus-visible {
+        outline: 3px solid #d69e00;
+        outline-offset: 2px;
+    }
+
+    [data-admin-panel][hidden] {
+        display: none !important;
+    }
+
+    @media (max-width: 600px) {
+        .admin-shortcuts button {
+            flex: 1 1 42%;
+        }
+    }
+</style>
+
+<script>
+(() => {
+    const main = document.querySelector('main');
+    const bookings = document.getElementById('bookingsList')?.closest('section');
+    const slots = document.getElementById('slotForm')?.closest('section');
+    const groups = document.getElementById('classGroupForm')?.closest('section');
+    const students = document.getElementById('students');
+
+    // نخليو الصفحة الأصلية خدامة إلا تبدّل شي عنصر من الكود القديم.
+    if (!main || !bookings || !slots || !groups || !students ||
+        [bookings, slots, groups, students].some(node => node.parentElement !== main)) {
+        return;
+    }
+
+    // نجمعو فقرة التفعيل والبحث ولائحة التلاميذ فقسم واحد.
+    const studentNodes = [];
+    for (let node = groups.nextElementSibling; node; node = node.nextElementSibling) {
+        studentNodes.push(node);
+        if (node === students) break;
+    }
+    if (studentNodes[studentNodes.length - 1] !== students) return;
+
+    const studentPanel = document.createElement('section');
+    studentPanel.className = 'student';
+
+    const heading = document.createElement('h2');
+    heading.textContent = 'التلاميذ والتفعيل';
+    studentPanel.appendChild(heading);
+    main.insertBefore(studentPanel, studentNodes[0]);
+    studentPanel.append(...studentNodes);
+
+    const menu = document.createElement('nav');
+    menu.className = 'admin-shortcuts';
+    menu.setAttribute('aria-label', 'أقسام لوحة الإدارة');
+
+    const sections = [
+        ['التلاميذ والتفعيل', studentPanel],
+        ['طلبات الحجز', bookings],
+        ['مواعيد التجربة', slots],
+        ['المجموعات والحصص المنتظمة', groups]
+    ];
+
+    const buttons = [];
+
+    function showSection(selected) {
+        sections.forEach(([, panel], index) => {
+            panel.hidden = index !== selected;
+            buttons[index].setAttribute('aria-pressed', String(index === selected));
+        });
+    }
+
+    sections.forEach(([label, panel], index) => {
+        panel.setAttribute('data-admin-panel', '');
+        if (!panel.id) panel.id = `admin-panel-${index}`;
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = label;
+        button.setAttribute('aria-controls', panel.id);
+        button.addEventListener('click', () => showSection(index));
+
+        buttons.push(button);
+        menu.appendChild(button);
+    });
+
+    main.insertBefore(menu, bookings);
+    showSection(0);
+})();
+</script>
+</body>
+</html>
