@@ -1256,10 +1256,10 @@ app.post('/admin/class-groups/:id/sessions', requireAdmin, (req, res) => {
                 WHERE group_id = ? AND starts_at >= ? AND starts_at < ?
             `).get(groupId, monthStart, nextMonth);
 
-            if (total >= 8) {
+            if (total >= 12) {
                 return {
                     code: 409,
-                    error: 'هاد المجموعة عندها 8 حصص مبرمجة فهاد الشهر.'
+                error: 'هاد المجموعة عندها 12 حصة مبرمجة فهاد الشهر.'
                 };
             }
 
@@ -1293,42 +1293,44 @@ app.post('/admin/class-groups/:id/sessions', requireAdmin, (req, res) => {
 app.get('/my-payment-info', requireStudent, (req, res) => {
     res.set('Cache-Control', 'no-store');
 
-    const groups = db.prepare(`
-        SELECT g.id, g.name, g.program
-        FROM class_enrollments e
-        JOIN class_groups g ON g.id = e.group_id
-        WHERE e.student_id = ?
-        ORDER BY g.name, g.id
-    `).all(req.student.id);
+    try {
+        const groups = db.prepare(`
+            SELECT g.id, g.name, g.program
+            FROM class_enrollments e
+            JOIN class_groups g ON g.id = e.group_id
+            WHERE e.student_id = ?
+            ORDER BY g.name, g.id
+        `).all(req.student.id);
 
-    if (!groups.length) {
-        return res.status(403).json({
-            error: 'معلومات الأداء غتبان ملي الأستاذة تضيفك للمجموعة أو للحصص الفردية.'
+        if (!groups.length) {
+            return res.status(403).json({
+                error: 'معلومات الأداء غتبان ملي الأستاذة تضيفك للمجموعة أو للحصص الفردية.'
+            });
+        }
+
+        res.json({
+            currency: 'USD',
+            plans: groups.map(group => ({
+                group_id: group.id,
+                group_name: group.name,
+                program: group.program,
+                monthly_amount: group.program === 'one-on-one'
+                    ? 80
+                    : 30,
+                payment_url: group.program === 'one-on-one'
+                    ? 'https://www.paypal.com/ncp/payment/CZJ8EMG4D86R2'
+                    : 'https://www.paypal.com/ncp/payment/3YMJPBULYL5CQ'
+            }))
+        });
+    } catch (error) {
+        console.error('Payment information failed:', error.code);
+
+        res.status(500).json({
+            error: 'تعذر تحميل معلومات الأداء. عاود المحاولة.'
         });
     }
-
-    const bank = process.env.PAYMENT_BANK?.trim();
-    const beneficiary = process.env.PAYMENT_BENEFICIARY?.trim();
-    const rib = process.env.PAYMENT_RIB?.trim();
-
-    if (!bank || !beneficiary || !rib ||
-        rib === 'REMPLACE_PAR_TON_RIB') {
-        return res.status(503).json({
-            error: 'معلومات التحويل مازال ما تجهّزاتش. تواصل مع الأستاذة.'
-        });
-    }
-
-    res.json({
-        bank,
-        beneficiary,
-        rib,
-        currency: 'MAD',
-        plans: groups.map(group => ({
-            group_name: group.name,
-            monthly_amount: group.program === 'one-on-one' ? 800 : 300
-        }))
-    });
 });
+
 app.get('/my-class-sessions', requireStudent, (req, res) => {
     const cutoff = new Date(Date.now() - 40 * 60 * 1000).toISOString();
 
