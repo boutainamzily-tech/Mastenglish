@@ -10,146 +10,207 @@
 
     body {
       margin: 0;
-      padding: 24px 16px;
-      background: #f4f6f9;
-      color: #24324a;
+      padding: 28px 16px;
       font-family: Arial, sans-serif;
       line-height: 1.8;
+      color: #203454;
+      background: linear-gradient(135deg, #edf3ff, #f7f3e9);
+      min-height: 100vh;
     }
 
     main {
-      max-width: 720px;
+      max-width: 760px;
       margin: auto;
-      padding: 26px;
-      background: white;
-      border-radius: 16px;
     }
 
-    a, h1, h2 { color: #1e3a8a; }
+    .back { color: #1e3a8a; }
 
-    .transfer, .paypal-test {
-      margin-top: 20px;
-      padding: 18px;
-      border-radius: 12px;
-    }
-
-    .transfer {
-      background: #e9f4ee;
-      border: 1px solid #c6dfd1;
-    }
-
-    .paypal-test {
-      background: #eef4ff;
-      border: 1px solid #cbdaf5;
-    }
-
-    .paypal-button {
-      display: inline-block;
-      padding: 10px 16px;
-      border-radius: 8px;
-      background: #1e3a8a;
+    header {
+      margin: 24px 0;
+      padding: 28px;
+      border-radius: 20px;
+      background: #172f62;
       color: white;
-      text-decoration: none;
-      font-weight: bold;
     }
 
-    .paypal-button:focus-visible {
-      outline: 3px solid #1e3a8a;
-      outline-offset: 3px;
-    }
+    h1 { margin: 0 0 8px; }
+    header p { margin: 0; }
+    #message { min-height: 28px; }
 
-    #paymentRib {
-      display: block;
-      direction: ltr;
-      text-align: start;
+    .plan {
+      margin: 20px 0;
+      padding: 26px;
+      background: #fff;
+      border: 1px solid #d8e2ee;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px #172f620a;
       overflow-wrap: anywhere;
-      user-select: all;
+    }
+
+    .plan h2 { margin: 0; }
+    .price {
+      margin: 12px 0;
+      font-size: 38px;
+      font-weight: bold;
+      color: #172f62;
+    }
+
+    .period { font-size: 16px; font-weight: normal; }
+
+    .pay-button {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 12px 24px;
+      border-radius: 10px;
+      background: #ffce39;
+      color: #172f62;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .pay-button:hover { background: #f5c326; }
+
+    a:focus-visible {
+      outline: 3px solid #2563eb;
+      outline-offset: 4px;
+    }
+
+    .notice {
+      padding: 18px;
+      border: 1px solid #c5dfd6;
+      border-radius: 14px;
+      background: #e8f5ef;
+    }
+
+    @media (max-width: 480px) {
+      header, .plan { padding: 20px; }
+      h1 { font-size: 26px; }
+      .pay-button { display: block; text-align: center; }
     }
   </style>
 </head>
 <body>
   <main>
-    <a href="my-schedule.html">الرجوع لجدول حصصي</a>
-    <h1>أداء الاشتراك</h1>
-    <p id="paymentMessage" role="status">جاري تحميل معلومات الأداء...</p>
+    <a class="back" href="my-schedule.html">الرجوع لجدول حصصي</a>
 
-    <section id="paymentDetails" hidden>
-      <h2>الثمن الشهري حسب البرنامج</h2>
-      <ul id="paymentPlans"></ul>
-      <p>قبل التحويل، تأكّد مع الأستاذة من المجموعة والشهر اللي غادي تخلّص عليه.</p>
+    <header>
+      <h1>أداء الاشتراك</h1>
+      <p>اختار الاشتراك الخاص بالبرنامج ديالك.</p>
+    </header>
 
-      <section id="paypalTest" class="paypal-test" hidden>
-        <h2>تجربة الأداء بالكارت </h2>
-        <p>المبلغ 1 دولار للتجربة فقط. إلا كملتي الأداء، غادي تكون خلصة حقيقية وما غاديش تفعّل الاشتراك.</p>
-        <a id="paypalTestLink" class="paypal-button"
-           target="_blank" rel="noopener noreferrer">
-          فتح صفحة تجربة الأداء (1 USD)
-        </a>
-      </section>
+    <p id="message" role="status" aria-live="polite">
+      جاري تحميل معلومات الاشتراك...
+    </p>
 
-      <div class="transfer">
-        <h2>معلومات التحويل البنكي</h2>
-        <p>البنك: <strong id="paymentBank"></strong></p>
-        <p>المستفيد: <strong id="paymentBeneficiary"></strong></p>
-        <p>RIB: <strong id="paymentRib"></strong></p>
-      </div>
+    <div id="plans"></div>
 
-      <p>من بعد ما يوصل التحويل، غتفعّل ليك الاشتراك 
-      </p>
-    </section>
+    <aside id="paymentNotice" class="notice" hidden>
+  استعمل نفس إيميل حسابك فالموقع فمعلومات الأداء باش نقدروا نربطو الخلصة بحسابك.
+</aside>
   </main>
 
   <script>
-    function showLocalPaypalTest() {
-      const isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname);
-      if (!isLocal) return;
+    const message = document.getElementById('message');
+    const plansBox = document.getElementById('plans');
+    const paymentNotice = document.getElementById('paymentNotice');
 
-      document.getElementById('paypalTestLink').href =
-        'https://www.paypal.com/ncp/payment/6UAJ7Q88AW33U';
-      document.getElementById('paypalTest').hidden = false;
-    }
+    const offers = {
+      kids: {
+        amount: 30,
+        url: 'https://www.paypal.com/ncp/payment/3YMJPBULYL5CQ'
+      },
+      adults: {
+        amount: 30,
+        url: 'https://www.paypal.com/ncp/payment/3YMJPBULYL5CQ'
+      },
+      'one-on-one': {
+        amount: 80,
+        url: 'https://www.paypal.com/ncp/payment/CZJ8EMG4D86R2'
+      }
+    };
 
     async function loadPaymentInfo() {
-      const message = document.getElementById('paymentMessage');
+      const response = await fetch('/my-payment-info', {
+        cache: 'no-store'
+      });
 
-      try {
-        const response = await fetch('/my-payment-info', {
-          cache: 'no-store'
-        });
-
-        if (response.status === 401) {
-          window.location.href = '/login.html';
-          return;
-        }
-
-        const data = await response.json().catch(() => ({}));
-
-        if (!response.ok || !Array.isArray(data.plans)) {
-          throw new Error(data.error || 'تعذر تحميل معلومات الأداء.');
-        }
-
-        const plans = document.getElementById('paymentPlans');
-        plans.replaceChildren();
-
-        for (const plan of data.plans) {
-          const item = document.createElement('li');
-          item.textContent =
-            `${plan.group_name} — ${plan.monthly_amount} درهم فالشهر`;
-          plans.appendChild(item);
-        }
-
-        document.getElementById('paymentBank').textContent = data.bank;
-        document.getElementById('paymentBeneficiary').textContent = data.beneficiary;
-        document.getElementById('paymentRib').textContent = data.rib;
-        document.getElementById('paymentDetails').hidden = false;
-        message.textContent = 'الأداء كيتم بالتحويل البنكي.';
-        showLocalPaypalTest();
-      } catch (error) {
-        message.textContent = error.message;
+      if (response.status === 401) {
+        window.location.replace('/login.html');
+        return;
       }
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data.error || 'تعذر تحميل معلومات الأداء.');
+      }
+
+      if (data.currency !== 'USD' || !Array.isArray(data.plans)) {
+        throw new Error('معلومات الأداء غير متوافقة. عاود المحاولة من بعد.');
+      }
+
+      const cards = [];
+
+      for (const plan of data.plans) {
+        const offer = offers[plan.program];
+
+        if (!offer ||
+            plan.monthly_amount !== offer.amount ||
+            plan.payment_url !== offer.url) {
+          throw new Error('تعذر التحقق من عرض الاشتراك.');
+        }
+
+        const card = document.createElement('section');
+        card.className = 'plan';
+
+        const title = document.createElement('h2');
+        title.textContent = plan.group_name;
+
+        const price = document.createElement('p');
+        price.className = 'price';
+
+        const amount = document.createElement('bdi');
+        amount.dir = 'ltr';
+        amount.textContent = `${offer.amount}$`;
+
+        const period = document.createElement('span');
+        period.className = 'period';
+        period.textContent = ' / الشهر';
+
+        price.append(amount, period);
+
+        const details = document.createElement('p');
+        details.textContent =
+          '12 حصة فالشهر، مدة كل حصة 40 دقيقة. الثمن لكل مستفيد.';
+
+        const button = document.createElement('a');
+        button.className = 'pay-button';
+        button.href = offer.url;
+        button.target = '_blank';
+        button.rel = 'noopener noreferrer';
+        button.textContent = 'خلّص بالكارت';
+        button.setAttribute(
+          'aria-label',
+          `خلّص اشتراك ${plan.group_name} — ${offer.amount}$، تفتح صفحة الأداء فناڤذة جديدة`
+        );
+
+        card.append(title, price, details, button);
+        cards.push(card);
+      }
+
+      plansBox.replaceChildren(...cards);
+      message.textContent = cards.length
+        ? ''
+        : 'ما كاين حتى اشتراك متاح للأداء حالياً.';
+      paymentNotice.hidden = cards.length === 0;
     }
 
-    loadPaymentInfo();
+    loadPaymentInfo().catch(error => {
+      plansBox.replaceChildren();
+      paymentNotice.hidden = true;
+      message.textContent =
+        error.message || 'تعذر الاتصال بالسيرفر.';
+    });
   </script>
 </body>
 </html>

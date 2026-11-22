@@ -3,318 +3,1842 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="تعلم الإنجليزية أونلاين مع Mastenglish.ma. برامج للصغار والكبار وحصص فردية، وحجز حصة تجريبية مجانية داخل الموقع.">
-  <meta name="theme-color" content="#1e3a8a">
-  <title>Mastenglish.ma | تعلم الإنجليزية خطوة بخطوة</title>
+  <meta name="description" content="تعلم الإنجليزية أونلاين مع Mastenglish.ma. حصص من 40 دقيقة للصغار والكبار، مجموعات صغيرة وحصص فردية، وتجربة مجانية بالحجز داخل الموقع.">
+  <meta name="theme-color" content="#142e63">
+  <title>Mastenglish.ma | خطوة صغيرة، ثقة كبيرة</title>
+
+  <script>
+    document.documentElement.classList.add('js');
+  </script>
+
   <style>
-    :root { --navy:#1e3a8a; --deep:#142e63; --blue:#2a5298; --gold:#ffcc00; --text:#24324a; --muted:#596579; --line:#dfe5ef; --paper:#f5f7fb; }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; scroll-padding-top:120px; }
-    body { margin:0; font-family:Tahoma,Arial,sans-serif; background:var(--paper); color:var(--text); line-height:1.8; }
-    [hidden] { display:none !important; }
-    a { color:var(--navy); text-underline-offset:4px; }
-    button, input, select { font:inherit; }
-    button, summary, a { -webkit-tap-highlight-color:transparent; }
-    :focus-visible { outline:3px solid #db9f00; outline-offset:5px; }
-    h1,h2,h3,p { margin-top:0; }
-    h1,h2,h3 { line-height:1.5; }
-    h2 { font-size:clamp(25px,3vw,34px); color:var(--navy); }
-    h3 { font-size:21px; color:var(--navy); }
-    .skip-link { position:absolute; top:-100px; right:16px; background:white; padding:12px; z-index:100; }
-    .skip-link:focus { top:12px; }
-    .announcement { padding:10px 20px; text-align:center; background:var(--gold); color:var(--deep); font-size:14px; font-weight:bold; }
-    .announcement a { color:inherit; }
-    .site-header { position:sticky; top:0; z-index:20; color:white; background:var(--deep); box-shadow:0 4px 18px #12254a16; }
-    .header-inner { max-width:1240px; margin:auto; padding:18px 24px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
-    .logo { color:white; font-size:25px; font-weight:bold; white-space:nowrap; text-decoration:none; line-height:1.4; }
-    .logo span { color:var(--gold); }
-    .site-nav { display:flex; flex-wrap:wrap; align-items:center; gap:12px 18px; font-size:14px; }
-    .site-nav > a, .library-menu > summary, .nav-button { color:white; text-decoration:none; }
-    .site-nav > a:hover, .nav-button:hover, .library-menu > summary:hover { color:var(--gold); }
-    .nav-button { border:0; background:none; padding:0; cursor:pointer; line-height:inherit; }
-    .library-menu { position:relative; }
-    .library-menu > summary { cursor:pointer; list-style:none; }
-    .library-menu > summary::-webkit-details-marker { display:none; }
-    .library-menu > summary::after { content:' ▾'; }
-    .library-links { position:absolute; top:calc(100% + 12px); right:0; min-width:235px; padding:8px; background:white; border:1px solid var(--line); border-radius:12px; box-shadow:0 12px 35px #10234b22; }
-    .library-links a { display:block; padding:10px 12px; border-radius:7px; text-decoration:none; }
-    .library-links a:hover { background:#eef3fc; }
-    .hero { position:relative; isolation:isolate; display:grid; place-items:center; min-height:500px; padding:70px 24px; overflow:hidden; background:var(--deep); color:white; text-align:center; }
-    .hero-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-2; }
-    .hero::before { content:''; position:absolute; inset:0; background:linear-gradient(110deg,#102751e8,#183c70b8); z-index:-1; }
-    .hero-content { width:min(100%,820px); }
-    .eyebrow { display:inline-block; margin-bottom:16px; color:var(--gold); font-size:14px; font-weight:bold; }
-    .hero h1 { font-size:clamp(30px,4.5vw,48px); margin-bottom:20px; }
-    .hero p { font-size:18px; color:#edf3ff; margin-bottom:28px; }
-    .hero small { display:block; margin-top:16px; color:#e0e9f8; }
-    .button { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:12px 22px; border:1px solid transparent; border-radius:9px; background:var(--navy); color:white; font-size:15px; font-weight:bold; text-decoration:none; text-align:center; cursor:pointer; line-height:1.6; }
-    .button:hover { background:var(--deep); }
-    .button-gold { background:var(--gold); color:var(--deep); }
-    .button-gold:hover { background:#efbd00; }
-    .button-outline { border-color:var(--line); color:var(--navy); background:white; }
-    .button-outline:hover { background:#edf3fc; }
-    .section { padding:64px 24px; }
-    .container { width:100%; max-width:1100px; margin:auto; }
-    .section-heading { text-align:center; max-width:720px; margin:0 auto 32px; }
-    .section-heading h2 { margin-bottom:12px; }
-    .section-heading p { color:var(--muted); margin-bottom:0; }
-    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
-    .card { background:white; border:1px solid var(--line); border-radius:14px; padding:26px; min-width:0; }
-    .program-card { display:flex; flex-direction:column; box-shadow:0 5px 20px #19325706; }
-    .program-card .tag { font-size:13px; color:var(--muted); margin-bottom:10px; }
-    .program-card p { color:var(--muted); }
-    .program-card ul { padding-right:20px; margin:0 0 24px; }
-    .program-card .button { margin-top:auto; }
-    .note { color:var(--muted); font-size:14px; text-align:center; margin:24px 0 0; }
-    .white-section { background:white; }
-    .step-number { display:grid; place-items:center; width:38px; height:38px; background:#edf2fd; color:var(--navy); border-radius:50%; font-weight:bold; margin-bottom:16px; }
-    .steps h3 { margin-bottom:10px; }
-    .steps p { color:var(--muted); margin-bottom:0; }
-    .two-column { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; }
-    .price-card { border-top:4px solid var(--navy); }
-    .price-card.featured { border-top-color:var(--gold); }
-    .price { font-size:27px; font-weight:bold; color:var(--navy); margin-bottom:12px; }
-    .price-card p { color:var(--muted); }
-    .testimonials-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
-    .testimonial { margin:0; }
-    .testimonial p { color:var(--muted); }
-    .testimonial footer { color:var(--navy); font-weight:bold; }
-    .faq { max-width:850px; margin:auto; }
-    .faq details { padding:18px 22px; border:1px solid var(--line); border-radius:10px; background:white; margin-bottom:12px; }
-    .faq summary { cursor:pointer; font-weight:bold; color:var(--navy); }
-    .faq details p { margin:14px 0 0; color:var(--muted); }
-    .contact-box { padding:40px 28px; background:var(--deep); border-radius:16px; color:white; text-align:center; }
-    .contact-box h2 { color:white; }
-    .contact-box p { max-width:650px; margin:0 auto 24px; color:#e4ecfa; }
-    .contact-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; }
-    .site-footer { background:#10244b; color:#e1e8f5; padding:28px 24px; text-align:center; font-size:14px; }
-    .site-footer p { margin-bottom:8px; }
-    .site-footer a { color:white; margin:0 8px; }
-    #accountNotice { margin:0; padding:10px 20px; background:#fff6db; text-align:center; font-size:14px; }
-    @media (max-width:1000px) {
-      .header-inner { flex-direction:column; gap:14px; }
-      .site-nav { justify-content:center; }
-      html { scroll-padding-top:155px; }
+    :root {
+      --navy: #142e63;
+      --blue: #294e94;
+      --ink: #20324b;
+      --muted: #5a687b;
+      --gold: #ffce43;
+      --mint: #e0f3eb;
+      --peach: #ffeadf;
+      --lilac: #ece8ff;
+      --cream: #fffcf5;
+      --line: #dce3ee;
     }
-    @media (max-width:700px) {
-      .site-header { position:relative; }
-      html { scroll-padding-top:20px; }
-      .header-inner { padding:18px 16px; }
-      .site-nav { gap:12px 16px; font-size:14px; width:100%; }
-      .hero { min-height:420px; padding:48px 18px; }
-      .hero p { font-size:16px; }
-      .section { padding:42px 16px; }
-      .grid, .two-column, .testimonials-grid { grid-template-columns:1fr; }
-      .card { padding:22px; }
-      .library-links { right:auto; left:50%; transform:translateX(-50%); min-width:220px; width:min(260px,calc(100vw - 32px)); }
-      .contact-box { padding:30px 20px; }
-      .contact-actions { flex-direction:column; }
-      .button { max-width:100%; }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 110px;
     }
-    @media (prefers-reduced-motion:reduce) {
-      html { scroll-behavior:auto; }
-      .hero-video { display:none; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--cream);
+      font-family: Tahoma, Arial, sans-serif;
+      line-height: 1.8;
     }
+
+    [hidden] { display: none !important; }
+
+    a {
+      color: inherit;
+      text-underline-offset: 5px;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    :focus-visible {
+      outline: 3px solid #bd7600;
+      outline-offset: 5px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1, h2, h3 { line-height: 1.5; }
+
+    h2 {
+      color: var(--navy);
+      font-size: clamp(27px, 3.4vw, 42px);
+    }
+
+    h3 { font-size: 23px; }
+
+    .shell {
+      width: min(1160px, calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    .section { padding-block: 82px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: .5px;
+      margin-bottom: 13px;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 3px;
+      background: currentColor;
+      border-radius: 4px;
+    }
+
+    .section-heading {
+      max-width: 720px;
+      margin-bottom: 36px;
+    }
+
+    .section-heading p {
+      margin-top: 13px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 50px;
+      padding: 12px 23px;
+      border: 1px solid transparent;
+      border-radius: 14px 5px 14px 14px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: bold;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px #142e6318;
+    }
+
+    .button-gold {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .button-navy {
+      background: var(--navy);
+      color: white;
+    }
+
+    .button-ghost {
+      border-color: #ffffff70;
+      color: white;
+      background: #ffffff08;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      right: 15px;
+      background: white;
+      padding: 12px;
+      z-index: 100;
+    }
+
+    .skip-link:focus { top: 12px; }
+
+    .announcement {
+      padding: 9px 20px;
+      text-align: center;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 13px;
+    }
+
+    .announcement a { font-weight: bold; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: var(--navy);
+      color: white;
+      box-shadow: 0 5px 16px #142e6315;
+    }
+
+    .head {
+      max-width: 1340px;
+      margin: auto;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      direction: ltr;
+      white-space: nowrap;
+      font-size: 27px;
+      line-height: 1.2;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--gold); }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px 17px;
+      font-size: 13px;
+    }
+
+    .site-nav > a,
+    .library-menu summary {
+      text-decoration: none;
+    }
+
+    .site-nav > a:hover,
+    .library-menu summary:hover,
+    .nav-button:hover {
+      color: var(--gold);
+    }
+
+    .nav-button {
+      border: 0;
+      color: inherit;
+      background: none;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    .menu-toggle {
+      display: none;
+      align-items: center;
+      gap: 9px;
+      background: #ffffff12;
+      color: white;
+      border: 1px solid #ffffff50;
+      border-radius: 8px;
+      padding: 8px 12px;
+    }
+
+    .library-menu { position: relative; }
+    .library-menu summary { cursor: pointer; }
+
+    .library-links {
+      position: absolute;
+      top: calc(100% + 15px);
+      inset-inline-end: 0;
+      width: 250px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: white;
+      color: var(--navy);
+      box-shadow: 0 15px 35px #142e6325;
+    }
+
+    .library-links a {
+      display: block;
+      padding: 9px 10px;
+      text-decoration: none;
+      border-radius: 7px;
+    }
+
+    .library-links a:hover { background: var(--mint); }
+
+    #accountNotice {
+      padding: 12px 24px;
+      background: var(--peach);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      color: white;
+      background: linear-gradient(120deg, #142e63, #23477f);
+      padding: 80px 0 74px;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .12;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, #142e6325, #142e63c9);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 55px;
+      align-items: center;
+    }
+
+    .hero .eyebrow { color: #b9e9d4; }
+
+    .hero h1 {
+      font-size: clamp(36px, 4.3vw, 61px);
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .hero h1 span {
+      color: var(--gold);
+      display: inline-block;
+    }
+
+    .hero-copy > p {
+      color: #e0e8f5;
+      margin: 22px 0 27px;
+      max-width: 580px;
+      font-size: 17px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-note {
+      font-size: 12px;
+      color: #d7e2f4;
+      margin-top: 16px;
+    }
+
+    .study-scene {
+      min-height: 370px;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .scene-ring {
+      position: absolute;
+      width: 330px;
+      height: 330px;
+      border: 1px dashed #ffffff45;
+      border-radius: 50%;
+      transform: rotate(-15deg);
+    }
+
+    .study-panel {
+      width: 320px;
+      max-width: 90%;
+      position: relative;
+      color: var(--navy);
+      background: var(--cream);
+      padding: 30px;
+      border-radius: 30px 8px 30px 30px;
+      transform: rotate(-5deg);
+      box-shadow: 14px 14px 0 #ffffff15;
+    }
+
+    .panel-label {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .hello {
+      font-size: 65px;
+      font-weight: 800;
+      line-height: 1.35;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .hello span { color: #dc7259; }
+
+    .study-panel > p {
+      font-size: 15px;
+      margin-top: 5px;
+    }
+
+    .book-art {
+      display: block;
+      width: 180px;
+      max-width: 100%;
+      height: 100px;
+      margin: 16px auto 6px;
+    }
+
+    .panel-tags {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      direction: ltr;
+      margin-top: 13px;
+    }
+
+    .panel-tags span {
+      padding: 4px 9px;
+      border-radius: 20px;
+      background: var(--mint);
+      font-size: 10px;
+    }
+
+    .float-word {
+      position: absolute;
+      padding: 10px 17px;
+      font-size: 17px;
+      line-height: 1.5;
+      font-weight: bold;
+      box-shadow: 0 8px 22px #071c3d35;
+      border-radius: 15px 15px 3px 15px;
+      direction: ltr;
+    }
+
+    .word-one {
+      top: 8px;
+      left: 0;
+      background: var(--gold);
+      color: var(--navy);
+      transform: rotate(8deg);
+    }
+
+    .word-two {
+      bottom: 6px;
+      right: 0;
+      background: #bfe6d4;
+      color: var(--navy);
+      transform: rotate(6deg);
+    }
+
+    .hero-facts {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-top: 52px;
+      padding-top: 24px;
+      border-top: 1px solid #ffffff25;
+      color: #dce7f7;
+      font-size: 13px;
+    }
+
+    .hero-facts strong {
+      color: var(--gold);
+      font-size: 22px;
+      margin-inline-end: 7px;
+    }
+
+    .program-grid,
+    .price-grid,
+    .why-grid,
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .program-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 29px;
+      border: 1px solid #142e6312;
+      border-radius: 30px 8px 30px 30px;
+    }
+
+    .program-card:nth-child(1) { background: var(--mint); }
+    .program-card:nth-child(2) { background: var(--peach); }
+    .program-card:nth-child(3) { background: var(--lilac); }
+
+    .program-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .program-symbol {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #142e6335;
+      border-radius: 18px 5px 18px 18px;
+      font-size: 24px;
+      font-weight: bold;
+      background: #ffffff60;
+      direction: ltr;
+    }
+
+    .program-label {
+      font-size: 11px;
+      letter-spacing: 1px;
+      font-weight: bold;
+      direction: ltr;
+    }
+
+    .program-card h3 {
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+
+    .program-card p {
+      color: #49586c;
+      font-size: 15px;
+      margin-bottom: 19px;
+    }
+
+    .program-meta {
+      font-size: 12px;
+      font-weight: bold;
+      border-top: 1px solid #142e6320;
+      padding-top: 16px;
+      margin-top: auto;
+    }
+
+    .program-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .pricing {
+      position: relative;
+      overflow: hidden;
+      background: #edf1fb;
+    }
+
+    .pricing::before {
+      content: '';
+      position: absolute;
+      width: 390px;
+      height: 390px;
+      border: 65px solid #dbe3f5;
+      border-radius: 50%;
+      top: -170px;
+      left: -190px;
+      pointer-events: none;
+    }
+
+    .pricing .shell { position: relative; }
+
+    .price-card {
+      padding: 30px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      border-radius: 28px 8px 28px 28px;
+      border: 1px solid #142e631c;
+    }
+
+    .plan-group { background: #d9eee5; }
+
+    .plan-private {
+      background: var(--navy);
+      color: white;
+      box-shadow: 0 16px 35px #142e6326;
+    }
+
+    .plan-trial { background: #ffe6d8; }
+
+    .plan-tag {
+      align-self: flex-start;
+      border: 1px solid currentColor;
+      border-radius: 20px;
+      padding: 3px 11px;
+      font-size: 11px;
+      margin-bottom: 18px;
+    }
+
+    .price-card h3 { margin-bottom: 7px; }
+
+    .plan-description {
+      min-height: 54px;
+      font-size: 14px;
+      opacity: .85;
+    }
+
+    .price {
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+      margin-top: 18px;
+      line-height: 1.2;
+    }
+
+    .price b {
+      font-size: 66px;
+      letter-spacing: -3px;
+      font-family: Arial, sans-serif;
+    }
+
+    .price span { font-size: 14px; }
+
+    .price-card small {
+      display: block;
+      margin-top: 10px;
+      font-size: 12px;
+      opacity: .85;
+    }
+
+    .plan-private .price b { color: var(--gold); }
+
+    .plan-features {
+      list-style: none;
+      padding: 21px 0;
+      margin: 21px 0 25px;
+      border-top: 1px solid #142e6325;
+      font-size: 14px;
+      flex: 1;
+    }
+
+    .plan-private .plan-features { border-color: #ffffff35; }
+
+    .plan-features li {
+      padding-block: 5px;
+      padding-inline-start: 23px;
+      position: relative;
+    }
+
+    .plan-features li::before {
+      content: '✓';
+      position: absolute;
+      inset-inline-start: 0;
+      font-weight: bold;
+    }
+
+    .price-card .button { width: 100%; }
+
+    .pricing-note {
+      margin-top: 25px;
+      padding: 17px 20px;
+      border: 1px dashed #a5b3d0;
+      border-radius: 12px;
+      color: #455773;
+      font-size: 13px;
+      background: #ffffff65;
+    }
+
+    .steps {
+      counter-reset: steps;
+      margin-top: 32px;
+    }
+
+    .step {
+      position: relative;
+      padding: 0 0 0 24px;
+    }
+
+    .step-number {
+      display: inline-grid;
+      place-items: center;
+      width: 45px;
+      height: 45px;
+      background: var(--gold);
+      color: var(--navy);
+      border-radius: 50% 50% 50% 5px;
+      font-weight: bold;
+      font-size: 20px;
+      margin-bottom: 17px;
+    }
+
+    .step h3 {
+      color: var(--navy);
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .faq-wrap {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 60px;
+      align-items: start;
+      margin-top: 65px;
+      padding-top: 55px;
+      border-top: 1px solid var(--line);
+    }
+
+    .faq-list details {
+      border-bottom: 1px solid var(--line);
+      padding: 17px 0;
+    }
+
+    .faq-list summary {
+      cursor: pointer;
+      font-weight: bold;
+      color: var(--navy);
+      padding-inline-end: 12px;
+    }
+
+    .faq-list p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .why-us {
+      background: var(--navy);
+      color: white;
+      position: relative;
+    }
+
+    .why-us h2 { color: white; }
+    .why-us .eyebrow { color: var(--gold); }
+    .why-grid { margin-top: 34px; }
+
+    .why-card {
+      padding: 26px;
+      background: #ffffff09;
+      border: 1px solid #ffffff28;
+      border-radius: 22px 6px 22px 22px;
+    }
+
+    .why-card .why-number {
+      color: #a6dac5;
+      font: 24px Arial, sans-serif;
+    }
+
+    .why-card h3 {
+      font-size: 21px;
+      margin: 13px 0 12px;
+      color: var(--gold);
+    }
+
+    .why-card p {
+      color: #d5dff0;
+      font-size: 14px;
+    }
+
+    .testimonials { background: #f1eefa; }
+
+    .review-rail {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: min(350px, 86%);
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 4px 2px 20px;
+      overscroll-behavior-inline: contain;
+    }
+
+    .review {
+      background: var(--cream);
+      border: 1px solid #d9d2ea;
+      padding: 26px;
+      border-radius: 24px 7px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      scroll-snap-align: start;
+    }
+
+    .review:nth-child(3n + 2) { background: #e3f2eb; }
+    .review:nth-child(3n) { background: #ffeade; }
+
+    .quote-mark {
+      color: #8273ad;
+      font: 60px/1 Georgia, serif;
+      height: 43px;
+    }
+
+    .review blockquote {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.95;
+    }
+
+    .review h3 {
+      font-size: 15px;
+      color: var(--navy);
+      margin-top: auto;
+      padding-top: 22px;
+    }
+
+    .rail-help {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 15px;
+    }
+
+    .contact-section {
+      background: var(--cream);
+      padding: 60px 0;
+    }
+
+    .contact-box {
+      position: relative;
+      overflow: hidden;
+      background: var(--gold);
+      border-radius: 35px 8px 35px 35px;
+      padding: 44px;
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #c99c2b;
+    }
+
+    .contact-box h2 {
+      font-size: clamp(26px, 3vw, 36px);
+    }
+
+    .contact-box p {
+      margin-top: 10px;
+      max-width: 650px;
+      font-size: 15px;
+    }
+
+    .contact-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .contact-buttons > a:last-child {
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .site-footer {
+      padding: 30px 0;
+      color: #d6dfed;
+      background: #10254c;
+      font-size: 12px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 1180px) {
+      .head { flex-wrap: wrap; }
+      .js .menu-toggle { display: inline-flex; }
+      .site-nav { width: 100%; padding-top: 10px; }
+      .js .site-nav:not(.is-open) { display: none; }
+    }
+
+    @media (max-width: 850px) {
+      .hero-grid { gap: 24px; }
+      .study-panel { padding: 25px; }
+      .program-grid, .price-grid { gap: 15px; }
+      .program-card, .price-card { padding: 23px; }
+      .program-card h3 { font-size: 20px; }
+      .price b { font-size: 55px; }
+      .faq-wrap { gap: 30px; }
+      .contact-box { flex-direction: column; align-items: flex-start; }
+      .contact-buttons { flex-direction: row; flex-wrap: wrap; }
+    }
+
+    @media (max-width: 680px) {
+      html { scroll-padding-top: 95px; }
+      .shell { width: calc(100% - 32px); }
+      .section { padding-block: 53px; }
+      .head { padding: 17px 16px; gap: 15px; }
+      .logo { font-size: 23px; }
+
+      .site-nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 17px;
+        padding: 15px 0 5px;
+        font-size: 13px;
+      }
+
+      .site-nav > a,
+      .nav-button { text-align: start; }
+
+      .library-menu { grid-column: 1 / -1; }
+
+      .library-links {
+        position: static;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .announcement { font-size: 11px; }
+      .hero { padding: 44px 0 28px; }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+      }
+
+      .hero h1 {
+        font-size: 39px;
+        letter-spacing: 0;
+      }
+
+      .hero-copy > p {
+        font-size: 15px;
+        margin-block: 17px 22px;
+      }
+
+      .hero-actions .button {
+        font-size: 13px;
+        padding: 12px 15px;
+      }
+
+      .study-scene {
+        min-height: 300px;
+        max-width: 380px;
+        width: 100%;
+        margin: auto;
+      }
+
+      .study-panel { width: 265px; padding: 22px; }
+      .hello { font-size: 51px; }
+      .book-art { height: 75px; margin-block: 10px; }
+      .scene-ring { width: 270px; height: 270px; }
+      .float-word { font-size: 14px; padding: 8px 12px; }
+
+      .hero-facts {
+        gap: 12px 22px;
+        margin-top: 30px;
+        padding-top: 18px;
+        font-size: 11px;
+      }
+
+      .hero-facts strong { font-size: 19px; }
+
+      .program-grid,
+      .price-grid,
+      .why-grid,
+      .steps,
+      .faq-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .program-card,
+      .price-card { padding: 27px; }
+
+      .program-card h3 { font-size: 23px; }
+      .section-heading { margin-bottom: 27px; }
+      .plan-description { min-height: 0; }
+      .price b { font-size: 65px; }
+      .steps { gap: 28px; }
+      .step { padding: 0; }
+
+      .faq-wrap {
+        margin-top: 42px;
+        padding-top: 38px;
+        gap: 0;
+      }
+
+      .faq-wrap .section-heading { margin-bottom: 12px; }
+      .contact-box { padding: 29px 24px; gap: 24px; }
+
+      .contact-buttons {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .button { transition: none; }
+      .button:hover { transform: none; }
+      .hero-video { display: none; }
+    }
+    /* حركة بطاقات الأثمنة */
+.price-card {
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+  transform-origin: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .price-card:hover {
+    transform: translateY(-10px) scale(1.025);
+    box-shadow: 0 22px 45px #142e6330;
+    z-index: 2;
+  }
+}
+
+.price-card:focus-within {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 22px 45px #142e6330;
+  z-index: 2;
+}
+
+.price-card:active {
+  transform: translateY(-4px) scale(1.015);
+}
+
+/* إظهار الفيديو أكثر */
+.hero-video {
+  opacity: .45;
+}
+
+.hero::after {
+  background: linear-gradient(
+    90deg,
+    rgba(20, 46, 99, .12),
+    rgba(20, 46, 99, .58)
+  );
+}
+
+/* الشريط الأصفر المتحرك */
+.announcement {
+  overflow: hidden;
+  padding: 10px 0;
+}
+
+.announcement-track {
+  display: flex;
+  direction: ltr;
+  width: max-content;
+  animation: announcementScroll 45s linear infinite;
+}
+
+.announcement-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 28px;
+  min-width: 100vw;
+  padding-inline: 28px;
+  white-space: nowrap;
+  direction: rtl;
+}
+
+.announcement-separator {
+  opacity: .6;
+}
+
+.announcement:hover .announcement-track,
+.announcement:focus-within .announcement-track {
+  animation-play-state: paused;
+}
+
+@keyframes announcementScroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* احترام إعداد تقليل الحركة */
+@media (prefers-reduced-motion: reduce) {
+  .price-card,
+  .price-card:hover,
+  .price-card:focus-within,
+  .price-card:active {
+    transform: none;
+    transition: none;
+  }
+
+  .announcement-track {
+    animation: none;
+    width: auto;
+    display: block;
+  }
+
+  .announcement-group {
+    min-width: 0;
+    white-space: normal;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+  }
+
+  .announcement-group[aria-hidden="true"] {
+    display: none;
+  }
+}
   </style>
 </head>
+
 <body>
   <a class="skip-link" href="#main">انتقل للمحتوى</a>
-  <div class="announcement">الحجز والمتابعة داخل الموقع — <a href="booking.html">احجز حصتك التجريبية المجانية</a></div>
+
+ <div class="announcement">
+  <div class="announcement-track" id="announcementTrack">
+    <div class="announcement-group">
+
+      <!-- بدّلي اسم الشهر هنا فقط -->
+      <span>
+        برامج شهر نونبر مع Mastenglish
+      </span>
+
+      <span class="announcement-separator" aria-hidden="true">✦</span>
+
+      <span>
+        12 حصص فالشهر · 40 دقيقة للحصة
+      </span>
+
+      <span class="announcement-separator" aria-hidden="true">✦</span>
+
+      <span>
+        المجموعات الصغيرة: 300 درهم · الفردي: 800 درهم
+      </span>
+
+      <span class="announcement-separator" aria-hidden="true">✦</span>
+
+      <span>
+        خطوتك الأولى كتبدا بتجربة مجانية —
+        <a href="booking.html">اختار موعدك من هنا</a>
+      </span>
+
+      <span class="announcement-separator" aria-hidden="true">✦</span>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const track = document.getElementById('announcementTrack');
+    if (!track || !track.firstElementChild) return;
+
+    const copy = track.firstElementChild.cloneNode(true);
+    copy.setAttribute('aria-hidden', 'true');
+    copy.inert = true;
+
+    copy.querySelectorAll('a').forEach(link => {
+      link.tabIndex = -1;
+    });
+
+    track.appendChild(copy);
+  })();
+</script>
+
   <header class="site-header">
-    <div class="header-inner">
-      <a class="logo" href="index.html" dir="ltr" aria-label="Mastenglish.ma — الرئيسية">Mastenglish<span>.ma</span></a>
-      <nav class="site-nav" aria-label="القائمة الرئيسية">
+    <div class="head">
+      <a class="logo" href="index.html"
+         aria-label="Mastenglish.ma، الصفحة الرئيسية">
+        Mastenglish<span>.ma</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" type="button"
+              aria-controls="siteNav" aria-expanded="false">
+        <span aria-hidden="true">☰</span> القائمة
+      </button>
+
+      <nav class="site-nav" id="siteNav" aria-label="القائمة الرئيسية">
         <a href="#features">البرامج</a>
-        <a href="#how-it-works">كيفاش نبدا؟</a>
         <a href="#pricing">الأسعار</a>
+        <a href="#contact">احجز تجربتك</a>
         <a href="about.html">من نحن</a>
         <a href="room.html">قاعة الدرس المباشر</a>
         <a href="my-bookings.html">حجوزاتي</a>
+        <a href="my-schedule.html">جدول حصصي</a>
+
         <details class="library-menu" id="libraryMenu">
           <summary>مكتبة الدروس</summary>
           <div class="library-links">
-            <a href="grammar.html">قواعد الإنجليزية (Grammar)</a>
-            <a href="vocabulary.html">المفردات اليومية (Vocabulary)</a>
-            <a href="videos.html">شروحات الفيديو (Videos)</a>
+            <a href="grammar.html">قواعد الإنجليزية</a>
+            <a href="vocabulary.html">المفردات اليومية</a>
+            <a href="videos.html">شروحات الفيديو</a>
           </div>
         </details>
+
         <a href="login.html" id="loginLink">تسجيل الدخول</a>
         <a href="admin.html" id="adminLink" hidden>لوحة الإدارة</a>
-        <button class="nav-button" id="logoutLink" type="button" hidden>تسجيل الخروج</button>
+        <button class="nav-button" id="logoutLink"
+                type="button" hidden>
+          تسجيل الخروج
+        </button>
       </nav>
     </div>
   </header>
+
   <p id="accountNotice" role="status" hidden></p>
 
   <main id="main">
-    <section class="hero" aria-labelledby="hero-title">
-      <video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1">
+    <!-- الواجهة الرئيسية -->
+    <section class="hero" aria-labelledby="heroTitle">
+      <video class="hero-video" autoplay muted loop playsinline
+             preload="metadata" aria-hidden="true" tabindex="-1">
         <source src="boutaina.mp4" type="video/mp4">
       </video>
-      <div class="hero-content">
-        <span class="eyebrow">Mastenglish.ma · الإنجليزية أونلاين</span>
-        <h1 id="hero-title">آجي تقرا الإنجليزية بكل أريحية</h1>
-        <p>بغيتي تطوّر مستواك فالإنجليزية، أو تعاون ولدك أو بنتك يتعلموها؟ حصص مباشرة وتفاعلية، مع شرح وممارسة حسب المستوى والأهداف ديال المستفيد.</p>
-        <a class="button button-gold" href="booking.html">احجز حصتك التجريبية المجانية</a>
-        <small>اختار موعداً متاحاً، وتابع تأكيد الأستاذة من «حجوزاتي».</small>
+
+      <div class="shell hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">الإنجليزية من دارك، وعلى قدّك</div>
+
+          <h1 id="heroTitle">
+            خطوة صغيرة اليوم،<br>
+            <span>ثقة كبيرة غداً.</span>
+          </h1>
+
+          <p>
+            بغيتي تهضر الإنجليزية بثقة، أو تعطي لولدك بداية مشجّعة؟
+            مرحبا بيك فـ Mastenglish. حصص مباشرة وتفاعلية،
+            مع الوقت باش تفهم، تجرّب وتشارك.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-gold" href="booking.html">
+              احجز تجربة مجانية
+              <span aria-hidden="true">↖</span>
+            </a>
+            <a class="button button-ghost" href="#features">
+              شوف البرامج
+            </a>
+          </div>
+
+          <div class="hero-note">
+            التجربة مجانية مرة واحدة لكل حساب ·
+         تأكيد الموعد من عند الموقع 
+          </div>
+        </div>
+
+        <div class="study-scene" aria-hidden="true">
+          <div class="scene-ring"></div>
+
+          <div class="study-panel">
+            <div class="panel-label">A LITTLE PRACTICE, EVERY TIME</div>
+            <div class="hello">Hello<span>!</span></div>
+            <p>نتعلّمو، نجرّبو، ونهضرو بثقة.</p>
+
+            <svg class="book-art" viewBox="0 0 220 120"
+                 fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 29L98 18L110 31L123 18L199 29V105L123 94L110 105L98 94L21 105V29Z"
+                    fill="#FFCE43" stroke="#142E63" stroke-width="3"/>
+              <path d="M30 19L97 10L110 24V94L97 83L30 92V19Z"
+                    fill="#E0F3EB" stroke="#142E63" stroke-width="3"/>
+              <path d="M190 19L123 10L110 24V94L123 83L190 92V19Z"
+                    fill="#FFEADF" stroke="#142E63" stroke-width="3"/>
+              <path d="M44 35L85 29M44 48L85 42M44 61L75 57M134 31L176 37M134 44L176 50M134 57L164 62"
+                    stroke="#142E63" stroke-width="3"
+                    stroke-linecap="round"/>
+            </svg>
+
+            <div class="panel-tags">
+              <span>LISTEN</span>
+              <span>SPEAK</span>
+              <span>PRACTICE</span>
+            </div>
+          </div>
+
+          <span class="float-word word-one">Let's talk ✦</span>
+          <span class="float-word word-two">كل محاولة كتفرق ↗</span>
+        </div>
+      </div>
+
+      <div class="shell hero-facts">
+        <span><strong>40</strong>دقيقة للحصة المنتظمة</span>
+        <span><strong>12</strong>حصص مبرمجة فالشهر</span>
+        <span><strong>4</strong>تلاميذ كحد أقصى فالمجموعة</span>
       </div>
     </section>
 
-    <section class="section" id="features" aria-labelledby="programs-title">
-      <div class="container">
+    <!-- البرامج التعليمية -->
+    <section class="section" id="features"
+             aria-labelledby="programsTitle">
+      <div class="shell">
         <div class="section-heading">
-          <h2 id="programs-title">اختار البرنامج اللي يناسبك</h2>
-          <p>الحصة التجريبية كتعاوننا نتعرفو على المستوى والأهداف، ونقترحو طريقة التعلم المناسبة.</p>
+          <div class="eyebrow">01 / اختار المسار ديالك</div>
+          <h2 id="programsTitle">لكل مرحلة، بداية كتليق بيها.</h2>
+          <p>
+            للصغار، للكبار، أو لهدف خاص بيك.
+            كنحدّدو المستوى فالتجربة، ونختارو معاك البرنامج المناسب.
+          </p>
         </div>
-        <div class="grid">
-          <article class="card program-card">
-            <span class="tag" lang="en" dir="ltr">Kids &amp; Teens</span>
+
+        <div class="program-grid">
+          <article class="program-card">
+            <div class="program-top">
+              <span class="program-symbol" aria-hidden="true">Aa</span>
+              <span class="program-label" lang="en">KIDS &amp; TEENS</span>
+            </div>
+
             <h3>الصغار والمراهقون</h3>
-            <p>تعلم تدريجي بأنشطة وقصص وممارسة، حسب عمر المستفيد ومستواه.</p>
-            <ul><li>المفردات والتعبير البسيط</li><li>الاستماع والنطق والمحادثة</li><li>تمارين لتثبيت المكتسبات</li></ul>
-            <a class="button" href="booking.html?program=kids">احجز تجربة لهذا البرنامج</a>
+            <p>
+              القصص، اللعب والأنشطة التفاعلية باش نتعلّمو المفردات،
+              نفهمو الجمل ونجرّبو الهضرة فجوّ مشجّع.
+            </p>
+
+            <div class="program-meta">
+              مجموعات حتى 4 تلاميذ · حسب السن والمستوى
+            </div>
+
+            <a class="program-link" href="booking.html?program=kids">
+              احجز تجربة للصغار <span aria-hidden="true">↖</span>
+            </a>
           </article>
-          <article class="card program-card">
-            <span class="tag" lang="en" dir="ltr">Adults</span>
+
+          <article class="program-card">
+            <div class="program-top">
+              <span class="program-symbol" aria-hidden="true">Hi!</span>
+              <span class="program-label" lang="en">ADULTS</span>
+            </div>
+
             <h3>الإنجليزية للكبار</h3>
-            <p>ممارسة الإنجليزية للاستعمال اليومي والسفر والعمل، مع التركيز على الاحتياجات ديالك.</p>
-            <ul><li>المحادثة فمواقف يومية</li><li>تقوية المفردات والقواعد</li><li>تطوير التعبير والثقة بالتدريج</li></ul>
-            <a class="button" href="booking.html?program=adults">احجز تجربة لهذا البرنامج</a>
+            <p>
+              نبنيو الأساس خطوة بخطوة، ونمارسو التواصل فمواقف
+              الحياة اليومية، السفر والخدمة، حسب المستوى ديالك.
+            </p>
+
+            <div class="program-meta">
+              مجموعات حتى 4 أشخاص · حسب المستوى
+            </div>
+
+            <a class="program-link" href="booking.html?program=adults">
+              احجز تجربة للكبار <span aria-hidden="true">↖</span>
+            </a>
           </article>
-          <article class="card program-card">
-            <span class="tag" lang="en" dir="ltr">One-on-one</span>
+
+          <article class="program-card">
+            <div class="program-top">
+              <span class="program-symbol" aria-hidden="true">1:1</span>
+              <span class="program-label" lang="en">ONE-ON-ONE</span>
+            </div>
+
             <h3>حصص فردية خاصة</h3>
-            <p>حصة مخصصة لمستفيد واحد، بخطة كتراعي الأهداف والصعوبات اللي محتاج يخدم عليها.</p>
-            <ul><li>شرح وممارسة حسب المستوى</li><li>العمل على النطق وتصحيح الأخطاء</li><li>دعم دراسي أو محادثة حسب الحاجة</li></ul>
-            <a class="button" href="booking.html?program=one-on-one">احجز تجربة لهذا البرنامج</a>
+            <p>
+              وقت مخصّص ليك وحدك، مع شرح وتمارين على قدّ أهدافك:
+              تقوية الأساس، النطق، المحادثة أو الدعم المدرسي.
+            </p>
+
+            <div class="program-meta">
+              مستفيد واحد · برنامج حسب الأهداف
+            </div>
+
+            <a class="program-link"
+               href="booking.html?program=one-on-one">
+              احجز تجربة فردية <span aria-hidden="true">↖</span>
+            </a>
           </article>
         </div>
-        <p class="note">مدة التجربة كتبان فالموعد المتاح. مدة الحصص المنتظمة وتوقيتها وثمنها كيتحددو قبل الاشتراك.</p>
       </div>
     </section>
 
-    <section class="section white-section" id="how-it-works" aria-labelledby="steps-title">
-      <div class="container">
-        <div class="section-heading"><h2 id="steps-title">كيفاش تبدا التعلم؟</h2><p>من اختيار الموعد حتى متابعة الطلب، كلشي من الموقع.</p></div>
-        <div class="grid steps">
-          <article class="card"><span class="step-number">1</span><h3>اختار البرنامج والموعد</h3><p>سجّل الدخول أو أنشئ حساباً، وعمّر معلومات المستفيد واختار من المواعيد المتاحة.</p></article>
-          <article class="card"><span class="step-number">2</span><h3>تابع تأكيد الحجز</h3><p>الطلب كيبقى فانتظار التأكيد. شوف الحالة فـ «حجوزاتي» قبل ما تعتبر الموعد مؤكداً.</p></article>
-          <article class="card"><span class="step-number">3</span><h3>دخل للحصة فوقتها</h3><p>فموعد التجربة المؤكدة، سجّل الدخول وفتح قاعة الدرس. الأستاذة كتقبلك من قاعة الانتظار.</p></article>
+   <!-- الأسعار والعروض -->
+<section class="section pricing" id="pricing"
+         aria-labelledby="pricingTitle">
+  <div class="shell">
+    <div class="section-heading">
+      <div class="eyebrow">02 / أثمنة واضحة من البداية</div>
+      <h2 id="pricingTitle">اختار العرض اللي يناسبك.</h2>
+      <p>
+        3 حصص فالأسبوع، كل حصة 40 دقيقة، ومتابعة قريبة.
+        بدا بالتجربة، ومن بعدها قرّر العرض المناسب ليك.
+      </p>
+    </div>
+
+    <div class="price-grid">
+      <article class="price-card plan-group">
+        <span class="plan-tag">نتعلّمو مع بعضياتنا</span>
+        <h3>المجموعة الصغيرة</h3>
+
+        <p class="plan-description">
+          للصغار أو الكبار، فمجموعات منفصلة حسب السن والمستوى.
+        </p>
+
+        <div class="price">
+          <b dir="ltr">30$</b>
+          <span>/ الشهر</span>
+        </div>
+
+        <small>الثمن لكل مستفيد</small>
+
+        <ul class="plan-features">
+          <li>12 حصة فالشهر، بمعدل 3 حصص فالأسبوع</li>
+          <li>40 دقيقة لكل حصة</li>
+          <li>حتى 4 تلاميذ فالمجموعة</li>
+          <li>ممارسة وتفاعل وتمارين حسب المستوى</li>
+        </ul>
+
+        <a class="button button-navy" href="booking.html">
+          نبدأ بتجربة مجانية <span aria-hidden="true">↖</span>
+        </a>
+      </article>
+
+      <article class="price-card plan-private">
+        <span class="plan-tag">وقت كامل ليك</span>
+        <h3>الحصص الفردية</h3>
+
+        <p class="plan-description">
+          برنامج شخصي، ووتيرة كتراعي المستوى والأهداف ديالك.
+        </p>
+
+        <div class="price">
+          <b dir="ltr">80$</b>
+          <span>/ الشهر</span>
+        </div>
+
+        <small>باقة شهرية لمستفيد واحد</small>
+
+        <ul class="plan-features">
+          <li>3 حصص فالأسبوع</li>
+          <li>40 دقيقة لكل حصة</li>
+          <li>الأستاذة مع مستفيد واحد</li>
+          <li>شرح وتمارين مخصّصة للأهداف ديالك</li>
+        </ul>
+
+        <a class="button button-gold"
+           href="booking.html?program=one-on-one">
+          نختار التجربة الفردية <span aria-hidden="true">↖</span>
+        </a>
+      </article>
+
+      <article class="price-card plan-trial">
+        <span class="plan-tag">تعارف وتحديد المستوى</span>
+        <h3>الحصة التجريبية</h3>
+
+        <p class="plan-description">
+          نتلاقاو، نشوفو المستوى ديالك ونعرّفوك بطريقة الدراسة.
+        </p>
+
+        <div class="price">
+          <b dir="ltr">0$</b>
+          <span>مجانية</span>
+        </div>
+
+        <small>تجربة مجانية واحدة لكل حساب</small>
+
+        <ul class="plan-features">
+          <li>اختيار البرنامج من صفحة الحجز</li>
+          <li>اختيار موعد من المواعيد المتاحة</li>
+          <li>متابعة التأكيد من «حجوزاتي»</li>
+          <li>مدة التجربة حسب الموعد المعروض</li>
+        </ul>
+
+        <a class="button button-navy" href="booking.html">
+          نحجز تجربتي <span aria-hidden="true">↖</span>
+        </a>
+      </article>
+    </div>
+
+    <p class="pricing-note">
+      حصص الباقة الشهرية كتكون 3 مرات فالأسبوع حسب الجدول
+      المتفق عليه، ومدة كل حصة 40 دقيقة.
+      الأداء كيكون قبل بداية حصص الشهر، والاشتراك كيفعّل
+      من بعد تأكيد وصوله. الحجز كيبدا بطلب تجربة؛
+      ما كيتدار حتى أداء من هاد الصفحة.
+    </p>
+  </div>
+</section>
+
+    <!-- طريقة الحجز والأسئلة الشائعة -->
+    <section class="section" id="how-it-works"
+             aria-labelledby="stepsTitle">
+      <div class="shell">
+        <div class="section-heading">
+          <div class="eyebrow">03 / من أول نقرة لأول حصة</div>
+          <h2 id="stepsTitle">البداية بسيطة، وكلشي من الموقع.</h2>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <span class="step-number" aria-hidden="true">1</span>
+            <h3>سجّل وطلب التجربة</h3>
+            <p>
+              أنشئ حسابك، اختار البرنامج، عمّر معلومات المستفيد
+              واختار موعداً متاحاً. للصغار، وليّ الأمر كيحجز من حسابه.
+            </p>
+          </div>
+
+          <div class="step">
+            <span class="step-number" aria-hidden="true">2</span>
+            <h3>تابع تأكيد الموعد</h3>
+            <p>
+              طلبك كيبقى فانتظار موافقة الأستاذة.
+              من صفحة <a href="my-bookings.html">حجوزاتي</a>
+              تقدر تشوف الحالة والموعد بتوقيت المغرب.
+            </p>
+          </div>
+
+          <div class="step">
+            <span class="step-number" aria-hidden="true">3</span>
+            <h3>وصل الوقت؟ مرحبا بالحصة!</h3>
+            <p>
+              زر الدخول للتجربة المؤكدة كيبان فوقتها فـ«حجوزاتي».
+              كتفتح القاعة من الموقع، وتسمح باستعمال
+              الميكروفون والكاميرا.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-wrap">
+          <div class="section-heading">
+            <div class="eyebrow">قبل ما تبدا</div>
+            <h2>شي سؤال فبالك؟</h2>
+            <p>ها أهم التفاصيل على الحجز والدراسة.</p>
+          </div>
+
+          <div class="faq-list">
+            <details>
+              <summary>واش التسجيل بوحدو كافي للدخول للحصة؟</summary>
+              <p>
+                إنشاء الحساب بوحدو ما كيفعّلش الدخول.
+                خاص تجربة مؤكدة وسارية فوقت الموعد، أو اشتراك
+                شهري مفعّل بعد تأكيد وصول الأداء.
+              </p>
+            </details>
+
+            <details>
+              <summary>واش الثمن ديال المجموعة لكل واحد؟</summary>
+              <p>
+                نعم، 300 درهم فالشهر لكل مستفيد، مقابل 8 حصص
+                من 40 دقيقة. المجموعة فيها حتى 4 تلاميذ،
+                وكنراعيو السن والمستوى فالتوزيع.
+              </p>
+            </details>
+
+            <details>
+              <summary>واش نقدر نلغي طلب التجربة؟</summary>
+              <p>
+                إلا الطلب مازال فانتظار التأكيد، تقدر تلغيه
+                من «حجوزاتي». من بعد التأكيد، زر الإلغاء
+                ما كيبقاش متاح من الصفحة.
+              </p>
+            </details>
+
+            <details>
+              <summary>كيفاش كيتحدد المستوى؟</summary>
+              <p>
+                فالحصة التجريبية كنشوفو الأساس والممارسة والأهداف،
+                ومن بعدها كنقترحو البرنامج المناسب.
+                مدة التجربة كتبان فالموعد اللي اخترتي.
+              </p>
+            </details>
+
+            <details>
+              <summary>إلا كان شي درس صعيب، شنو كنديرو؟</summary>
+              <p>
+                كنعاودو نشرحو بطريقة مناسبة وكنركّزو على النقط
+                اللي خاصها تدريب. أي وقت أو حصة إضافية خارج
+                الباقة كيتّفق عليها مسبقاً.
+              </p>
+            </details>
+
+            <details>
+              <summary>ما لقيتش موعداً متاحاً، شنو ندير؟</summary>
+              <p>
+                رجع لصفحة الحجز من بعد؛ الأستاذة كتضيف المواعيد
+                حسب التوفر. ما كيتسجّل حتى طلب بلا اختيار موعد متاح.
+              </p>
+            </details>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section" aria-labelledby="why-title">
-      <div class="container">
-        <div class="section-heading"><h2 id="why-title">التعلم مع Mastenglish.ma</h2></div>
-        <div class="grid steps">
-          <article class="card"><h3>تعلم بالممارسة</h3><p>شرح واضح، أسئلة، تمارين ومحادثة باش تستعمل اللي تعلمتيه.</p></article>
-          <article class="card"><h3>حسب المستوى والأهداف</h3><p>كنبداو بالتعرف على احتياجات المستفيد، ونخدمو على الصعوبات خطوة بخطوة.</p></article>
-          <article class="card"><h3>متابعة من حسابك</h3><p>طلب التجربة وحالتو وتوقيتو كيبقاو ظاهرين فـ «حجوزاتي».</p></article>
+    <!-- علاش Mastenglish، بعد البرامج والأسعار -->
+    <section class="section why-us" id="why-us"
+             aria-labelledby="whyTitle">
+      <div class="shell">
+        <div class="section-heading">
+          <div class="eyebrow">04 / الطريقة كتفرق</div>
+          <h2 id="whyTitle">علاش <bdi>Mastenglish.ma</bdi>؟</h2>
+        </div>
+
+        <div class="why-grid">
+          <article class="why-card">
+            <span class="why-number" aria-hidden="true">01</span>
+            <h3>بلاصة باش تشارك</h3>
+            <p>
+              المجموعات الصغيرة كتخلّي المجال للسؤال، الهضرة
+              وتصحيح الأخطاء، مع تشجيع كل واحد يجرّب على قد مستواه.
+            </p>
+          </article>
+
+          <article class="why-card">
+            <span class="why-number" aria-hidden="true">02</span>
+            <h3>40 دقيقة فيها تفاعل</h3>
+            <p>
+              شرح، ممارسة وأنشطة مختلفة فحصة مركّزة،
+              باش يبقى التعلم متنوّع وواضح للصغار والكبار.
+            </p>
+          </article>
+
+          <article class="why-card">
+            <span class="why-number" aria-hidden="true">03</span>
+            <h3>تنظيم من حسابك</h3>
+            <p>
+              طلب التجربة، متابعة التأكيد والدخول للقاعة من الموقع.
+              المواعيد كتكون واضحة وبتوقيت المغرب.
+            </p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="section white-section" id="pricing" aria-labelledby="pricing-title">
-      <div class="container">
-        <div class="section-heading"><h2 id="pricing-title">التجربة والاشتراك</h2><p>بدا بالتجربة قبل اختيار البرنامج المنتظم.</p></div>
-        <div class="two-column">
-          <article class="card price-card featured"><h3>الحصة التجريبية</h3><div class="price">مجانية</div><p>للتعرف على طريقة الشرح وتقييم المستوى والأهداف. تجربة واحدة لكل حساب، حسب المواعيد المتاحة وبعد تأكيد الأستاذة.</p><a class="button" href="booking.html">اختار موعد التجربة</a></article>
-          <article class="card price-card"><h3>الاشتراك الشهري</h3><div class="price">الثمن حسب البرنامج</div><p>كيتم توضيح الثمن وعدد الحصص ومدتها والتوقيت قبل الاشتراك. الدخول للحصص المنتظمة كيتفعّل من بعد تأكيد الأستاذة لوصول الأداء.</p><a class="button button-outline" href="#features">شوف البرامج</a></article>
+    <!-- آراء التلاميذ والأولياء -->
+    <section class="section testimonials" id="testimonials"
+             aria-labelledby="reviewsTitle">
+      <div class="shell">
+        <div class="section-heading">
+          <div class="eyebrow">05 / كلمات من التجربة</div>
+          <h2 id="reviewsTitle">آراء التلاميذ والأولياء</h2>
+          <p>تجاربهم وكلماتهم مع Mastenglish.</p>
         </div>
-      </div>
-    </section>
 
-    <!-- آراء من النسخة الأصلية. قبل النشر، تأكدي من صحتها ومن الإذن بعرض الأسماء. -->
-    <section class="section" id="testimonials" aria-labelledby="testimonials-title">
-      <div class="container">
-        <div class="section-heading"><h2 id="testimonials-title">آراء التلاميذ والأولياء</h2></div>
-        <div class="testimonials-grid">
-          <blockquote class="card testimonial"><p>«كنت كنلقى صعوبة كبيرة في الهضرة بالإنجليزية، ولكن الدروس هنا تفاعلية ومرنة بزاف. الثقة ديالي تبدلات تماماً!»</p><footer>حسناء الخياطي</footer></blockquote>
-          <blockquote class="card testimonial"><p>«الحصص واعرين بزاف كيعجبني الشرح واضح وعملي. كنصح بيه بقوة لأي مبتدئ.»</p><footer>ندى واري</footer></blockquote>
-          <blockquote class="card testimonial"><p>«أخيراً، حصة إنجليزية كنمارس فيها الهضرة فعلياً بلا حشمة. الجو مشجع بزاف.»</p><footer>محمد طه بومليك</footer></blockquote>
-          <blockquote class="card testimonial"><p>«ولدي كيتسنا كل حصة بفارغ الصبر. الألعاب كيخليو التعلم بحال شي لعبة ممتعة!»</p><footer>لطيفة ايت</footer></blockquote>
-          <blockquote class="card testimonial"><p>«مستوايا تطور بزاف خصوصاً في تكوين الجمل والمحادثة بدون تردد. شكراً جزيلاً على المجهود.»</p><footer>فاطمة كريم</footer></blockquote>
-          <blockquote class="card testimonial"><p>«أحسن تجربة دوزتها في تعلم الإنجليزية أونلاين، الشرح مبسط والأسلوب كيشجع الواحد يتابع.»</p><footer>الياس زبيت</footer></blockquote>
-          <blockquote class="card testimonial"><p>«دروس ممتازة ومفيدة جداً للناس اللي يلا غادي يبداو من الصفر. تبارك الله على الأستاذة.»</p><footer>محمد امين</footer></blockquote>
-          <blockquote class="card testimonial"><p>«شكراً جزيلاً، بنتي ولات كتفهم وتتكلم بطلاقة نسبية في وقت قصير بزاف.»</p><footer>جميلة وادو</footer></blockquote>
+        <div class="review-rail" tabindex="0" role="region"
+             aria-label="آراء التلاميذ والأولياء، قائمة قابلة للتمرير أفقياً">
+
+          <article class="review">
+            <span class="quote-mark" aria-hidden="true">“</span>
+            <blockquote>
+              "كنت كنلقى صعوبة كبيرة في الهضرة بالإنجليزية،
+              ولكن الدروس هنا تفاعلية ومرنة بزاف.
+              الثقة ديالي تبدلات تماماً!"
+            </blockquote>
+            <h3>حسناء الخياطي</h3>
+          </article>
+
+          <article class="review">
+            <span class="quote-mark" aria-hidden="true">“</span>
+            <blockquote>
+              "الحصص واعرين بزاف كيعجبني الشرح واضح وعملي.
+              كنصح بيه بقوة لأي مبتدئ."
+            </blockquote>
+            <h3>ندى واري</h3>
+          </article>
+
+          <article class="review">
+            <span class="quote-mark" aria-hidden="true">“</span>
+            <blockquote>
+              "أخيراً، حصة إنجليزية كنمارس فيها الهضرة فعلياً بلا حشمة.
+              الجو مشجع بزاف."
+            </blockquote>
+            <h3>محمد طه بومليك</h3>
+          </article>
+
+          <article class="review">
+            <span class="quote-mark" aria-hidden="true">“</span>
+            <blockquote>
+              "ولدي كيتسنا كل حصة بفارغ الصبر.
+              الألعاب كيخليو التعلم بحال شي لعبة ممتعة!"
+            </blockquote>
+            <h3>لطيفة ايت</h3>
+          </article>
+
+          <article class="review">
+            <span class="quote-mark" aria-hidden="true">“</span>
+            <blockquote>
+              "مستوايا تطور بزاف خصوصاً في تكوين الجمل والمحادثة
+              بدون تردد. شكراً جزيلاً على المجهود."
+            </blockquote>
+            <h3>فاطمة كريم</h3>
+          </article>
+
+          <article class="review">
+            <span class="quote-mark" aria-hidden="true">“</span>
+            <blockquote>
+              "أحسن تجربة دوزتها في تعلم الإنجليزية أونلاين،
+              الشرح مبسط والأسلوب كيشجع الواحد يتابع."
+            </blockquote>
+            <h3>الياس زبيت</h3>
+          </article>
+
+          <article class="review">
+            <span class="quote-mark" aria-hidden="true">“</span>
+            <blockquote>
+              "دروس ممتازة ومفيدة جداً للناس اللي يلا غادي يبداو
+              من الصفر. تبارك الله على الأستاذة."
+            </blockquote>
+            <h3>محمد امين</h3>
+          </article>
+
+          <article class="review">
+            <span class="quote-mark" aria-hidden="true">“</span>
+            <blockquote>
+              "شكراً جزيلاً، بنتي ولات كتفهم وتتكلم بطلاقة نسبية
+              في وقت قصير بزاف."
+            </blockquote>
+            <h3>جميلة وادو</h3>
+          </article>
         </div>
+
+        <p class="rail-help">
+          مرّر البطاقات أفقياً باش تقرا باقي الآراء.
+        </p>
       </div>
     </section>
 
-    <section class="section white-section" aria-labelledby="faq-title">
-      <div class="container faq">
-        <div class="section-heading"><h2 id="faq-title">أسئلة كتطرح بزاف</h2></div>
-        <details><summary>كيفاش كيدوزو الحصص؟</summary><p>الحصص مباشرة عبر Zoom داخل قاعة الدرس فالموقع. كتحتاج جهازاً فيه ميكروفون وكاميرا واتصالاً بالإنترنت، والسماح للمتصفح يستعملهم.</p></details>
-        <details><summary>كيفاش نحجز التجربة ليا أو لولدي؟</summary><p>اضغط على «احجز حصتك التجريبية»، وسجّل الدخول أو أنشئ حساباً. اختار البرنامج وعمّر اسم وعمر المستفيد والموعد. بالنسبة للصغار، وليّ الأمر كيدير الحجز من حسابه.</p></details>
-        <details><summary>واش الموعد كيتأكد مباشرة؟</summary><p>لا، كيتسجّل أولاً طلب فانتظار تأكيد الأستاذة. تقدر تشوف الموعد والحالة من صفحة «حجوزاتي»؛ الحجز كيولي مؤكداً ملي كتبان «الحجز مؤكد».</p></details>
-        <details><summary>واش التجربة كتبدأ ملي كنحجز؟</summary><p>لا، الدخول للتجربة المؤكدة كيكون فوقت الموعد، من البداية حتى النهاية اللي باينين فالحجز. الأوقات معروضة بتوقيت المغرب.</p></details>
-        <details><summary>كيفاش كيتحدد المستوى والبرنامج؟</summary><p>فالتجربة كنشوفو مستوى المستفيد والأهداف ديالو، ومن بعدها كنقترحو البرنامج المناسب قبل الاشتراك.</p></details>
-        <details><summary>واش التسجيل فالموقع كافي للدخول للحصص؟</summary><p>إنشاء الحساب بوحدو ما كيفعّلش الدخول. خاص تجربة مؤكدة وسارية فوقتها، أو اشتراك شهري مفعّل بعد تأكيد وصول الأداء.</p></details>
-        <details><summary>شنو ندير إلا ما لقيتش موعداً متاحاً؟</summary><p>رجع لصفحة الحجز من بعد، حيث الأستاذة كتضيف المواعيد حسب التوفر. ما كيتسجّل حتى طلب بلا اختيار موعد متاح.</p></details>
-      </div>
-    </section>
+    <!-- الدعوة للحجز -->
+    <section class="contact-section" id="contact"
+             aria-labelledby="contactTitle">
+      <div class="shell contact-box">
+        <div>
+          <h2 id="contactTitle">واجد لأول «Hello» بثقة؟</h2>
+          <p>
+            اختار البرنامج والموعد المتاح، وخلّي أول خطوة
+            تكون تجربة مجانية. تابع الطلب من حسابك حتى تأكيد الأستاذة.
+          </p>
+        </div>
 
-    <section class="section" id="contact" aria-labelledby="contact-title">
-      <div class="container contact-box">
-        <h2 id="contact-title">واجد تبدا؟</h2>
-        <p>اختار البرنامج والموعد، وأرسل طلب التجربة من الموقع. تابع الحالة من حسابك حتى تأكيد الأستاذة.</p>
-        <div class="contact-actions"><a class="button button-gold" href="booking.html">احجز حصتك التجريبية المجانية</a><a class="button button-outline" href="my-bookings.html">متابعة حجوزاتي</a></div>
+        <div class="contact-buttons">
+          <a class="button button-navy" href="booking.html">
+            احجز حصتك التجريبية <span aria-hidden="true">↖</span>
+          </a>
+          <a href="my-bookings.html">عندي حجز، نمشي لحجوزاتي</a>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p><bdi>Mastenglish.ma</bdi> · تعلم الإنجليزية أونلاين</p>
-    <p><a href="about.html">من نحن</a><a href="booking.html">حجز تجربة</a><a href="my-bookings.html">حجوزاتي</a></p>
-    <small>© 2026 Mastenglish.ma. جميع الحقوق محفوظة.</small>
+    <div class="shell footer-inner">
+      <div>
+        <bdi>Mastenglish.ma</bdi> · الإنجليزية خطوة بخطوة<br>
+        © 2026 جميع الحقوق محفوظة.
+      </div>
+
+      <div class="footer-links">
+        <a href="about.html">من نحن</a>
+        <a href="booking.html">حجز تجربة</a>
+        <a href="my-bookings.html">حجوزاتي</a>
+        <a href="login.html">تسجيل الدخول</a>
+      </div>
+    </div>
   </footer>
 
   <script>
-  (async function () {
-    const loginLink = document.getElementById('loginLink');
-    const adminLink = document.getElementById('adminLink');
-    const logoutLink = document.getElementById('logoutLink');
-    const notice = document.getElementById('accountNotice');
+    const menuToggle = document.getElementById('menuToggle');
+    const siteNav = document.getElementById('siteNav');
     const libraryMenu = document.getElementById('libraryMenu');
 
-    document.addEventListener('click', function (event) {
-      if (!libraryMenu.contains(event.target)) libraryMenu.open = false;
+    function closeNavigation() {
+      siteNav.classList.remove('is-open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    menuToggle.addEventListener('click', () => {
+      const open = siteNav.classList.toggle('is-open');
+      menuToggle.setAttribute('aria-expanded', String(open));
     });
-    document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape' && libraryMenu.open) {
+
+    siteNav.addEventListener('click', event => {
+      if (event.target.closest('a')) {
+        closeNavigation();
+      }
+    });
+
+    document.addEventListener('click', event => {
+      if (!libraryMenu.contains(event.target)) {
+        libraryMenu.open = false;
+      }
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key !== 'Escape') return;
+
+      if (libraryMenu.open) {
         libraryMenu.open = false;
         libraryMenu.querySelector('summary').focus();
+      } else if (siteNav.classList.contains('is-open')) {
+        closeNavigation();
+        menuToggle.focus();
       }
     });
 
-    logoutLink.addEventListener('click', async function () {
-      logoutLink.disabled = true;
-      try {
-        const response = await fetch('/auth/logout', { method:'POST' });
-        if (!response.ok) throw new Error('تعذر تسجيل الخروج. عاود المحاولة.');
-        window.location.href = 'index.html';
-      } catch (error) {
-        notice.hidden = false;
-        notice.textContent = error.message || 'تعذر الاتصال بالسيرفر.';
-        logoutLink.disabled = false;
-      }
-    });
-
-    try {
-      const response = await fetch('/auth/me', { cache:'no-store' });
-      if (response.status === 401) return;
-      if (!response.ok) throw new Error('تعذر التحقق من الحساب.');
-      const data = await response.json();
-      loginLink.hidden = true;
-      logoutLink.hidden = false;
-      adminLink.hidden = !data.isAdmin;
-    } catch (error) {
-      console.error('Account check failed:', error);
-      notice.hidden = false;
-      notice.textContent = 'تعذر التحقق من الحساب. حدّث الصفحة أو افتح تسجيل الدخول.';
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const video = document.querySelector('.hero-video');
+      video.autoplay = false;
+      video.pause();
     }
-  })();
+
+    (async function () {
+      const loginLink = document.getElementById('loginLink');
+      const adminLink = document.getElementById('adminLink');
+      const logoutLink = document.getElementById('logoutLink');
+      const notice = document.getElementById('accountNotice');
+
+      logoutLink.addEventListener('click', async () => {
+        logoutLink.disabled = true;
+
+        try {
+          const response = await fetch('/auth/logout', {
+            method: 'POST'
+          });
+
+          if (!response.ok) {
+            throw new Error('تعذر تسجيل الخروج. عاود المحاولة.');
+          }
+
+          window.location.href = 'index.html';
+        } catch (error) {
+          notice.textContent =
+            error.message || 'تعذر الاتصال بالسيرفر.';
+          notice.hidden = false;
+          logoutLink.disabled = false;
+        }
+      });
+
+      try {
+        const response = await fetch('/auth/me', {
+          cache: 'no-store'
+        });
+
+        if (response.status === 401) return;
+
+        if (!response.ok) {
+          throw new Error('Account check failed');
+        }
+
+        const data = await response.json();
+
+        if (!data.student) {
+          throw new Error('Invalid account response');
+        }
+
+        loginLink.hidden = true;
+        logoutLink.hidden = false;
+        adminLink.hidden = !data.isAdmin;
+      } catch {
+        notice.textContent =
+          'تعذر التحقق من الحساب. حدّث الصفحة أو افتح تسجيل الدخول.';
+        notice.hidden = false;
+      }
+    })();
   </script>
 </body>
 </html>
