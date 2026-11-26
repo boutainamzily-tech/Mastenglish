@@ -127,7 +127,7 @@ db.exec(`
         FOREIGN KEY (group_id) REFERENCES class_groups(id)
     );
 `);
-   app.set('trust proxy', 'loopback');
+   app.set('trust proxy', process.env.NODE_ENV === 'production' ? 1 : 'loopback');
     app.use(cookieParser());
 
     const cookieOptions = {
