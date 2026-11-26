@@ -12,7 +12,8 @@ module.exports = function setupAuth(app) {
         throw new Error('AUTH_SECRET is missing');
     }
 
-    const db = new Database(path.join(__dirname, 'users.db'));
+    const dbPath = process.env.DATABASE_PATH || path.join(__dirname, 'users.db');
+    const db = new Database(dbPath);
     db.pragma('journal_mode = WAL');
     db.exec(`
         CREATE TABLE IF NOT EXISTS students (

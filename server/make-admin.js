@@ -8,7 +8,9 @@ if (!email) {
     process.exit(1);
 }
 
-const db = new Database(path.join(__dirname, 'users.db'));
+const dbPath = process.env.DATABASE_PATH
+    || path.join(__dirname, 'users.db');
+const db = new Database(dbPath, { fileMustExist: true });
 const student = db.prepare(
     'SELECT id, name, email FROM students WHERE email = ?'
 ).get(email);
